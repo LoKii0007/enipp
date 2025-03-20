@@ -1,0 +1,172 @@
+/* From Uiverse.io by mrpumps31232 */
+.loading-wave {
+  width: 300px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.loading-bar {
+  width: 20px;
+  height: 10px;
+  margin: 0 5px;
+  background-color: #3498db;
+  border-radius: 5px;
+  animation: loading-wave-animation 1s ease-in-out infinite;
+}
+
+::-webkit-scrollbar {
+  width: 7px; /* Set the width of the scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(136, 136, 136); /* Set the color of the thumb */
+  border-radius: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #303030; /* Set the color of the track */
+}
+
+.loading-bar:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.loading-bar:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.loading-bar:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+@keyframes loading-wave-animation {
+  0% {
+    height: 10px;
+  }
+
+  50% {
+    height: 50px;
+  }
+
+  100% {
+    height: 10px;
+  }
+}
+
+.card:hover .bottom-border-1, .card:hover .bottom-border-2, .card:hover .top-border-1, .card:hover .top-border-2 {
+  opacity: 1;
+}
+
+.tf-button{
+  position: relative;
+}
+
+.tf-button::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 90%;
+  background-color: #21E378;
+  transition: all 0.3s;
+  z-index: 10;
+}
+
+.tf-btn-2::after{
+  background-color: blue;
+}
+
+.tf-button:hover::after {
+  width: 100%;
+  height: 100%;
+}
+
+
+.custom-card{
+  position: relative;
+  transition: all .3s ease;
+  box-shadow: 0px 10px 25px rgba(255, 255, 255, 0);
+  cursor: pointer;
+}
+
+.custom-card:hover{
+  box-shadow: 0px 10px 25px rgba(255, 255, 255, 0.3);
+}
+
+.text-effect{
+  transition: all .3s ease;
+}
+.custom-card:hover .text-effect{
+  opacity: 1;
+}
+
+.custom-card::after, .custom-card::before{
+  content: "";
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  opacity: 0;
+  transition: all .3s ease;
+}
+.custom-card::after{
+  border-bottom: 5px solid rgb(33, 231, 134);
+  border-right: 5px solid rgb(33, 231, 134);
+  bottom: 0%;
+  right: 0%;
+}
+.custom-card::before{
+  border-top: 5px solid rgb(33, 231, 134);
+  border-left: 5px solid rgb(33, 231, 134);
+  TOP: 0%;
+  left: 0%;
+}
+
+.custom-card:hover::after, .custom-card:hover::before{
+  opacity: 1;
+  transition: .5s ease-in-out;
+}
+
+.custom-card-1{
+  animation: wave-1 10000ms infinite ease-in-out;
+}
+.custom-card-2{
+  animation: wave-1 10000ms infinite ease-in-out 4s ;
+}
+.custom-card-3{
+  animation: wave-1 10000ms infinite ease-in-out 7s ;
+}
+
+.marque{
+  animation: slide-left 3000ms linear infinite ;
+}
+
+@keyframes slide-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-117.07px);
+  }
+}
+@keyframes wave-1 {
+  0% {
+    transform: translateY(0);
+  }
+
+  30% {
+    transform: translateY(-35vw);
+  }
+
+  50% {
+    transform: translateY(-35vw);
+  }
+
+  80% {
+    transform: translateY(-70vw);
+  }
+
+  100% {
+    transform: translateY(-70vw);
+  }
+}
