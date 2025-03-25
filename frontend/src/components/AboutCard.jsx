@@ -1,17 +1,40 @@
 import React from "react";
+import { Canvas } from "@react-three/fiber";
+import { Environment, OrbitControls, Text } from "@react-three/drei";
+import { Model1 } from "../models/Model1";
+import { Model2 } from "../models/Model2";
 
-const AboutCard = ({theme}) => {
+const AboutCard = ({ item, theme, index }) => {
   return (
     <>
-      <div className={`about-card custom-card cursor-pointer ${theme === 'dark' ? 'bg-[#141B22] text-white' : 'bg-[#ffffff] text-black'} p-6 justify-center items-center flex flex-col gap-6  relative md:p-12 `}>
-        <div className="pt-12 text-center relative justify-center flex ">
-          <div className="text-[80px] text-[#21E786] bottom-1 font-sans leading-none absolute z-10 opacity-30 text-effect font-bold">01</div>
-          <span className="z-20 font-bold text-2xl ">HIGH QUALITY</span>
+      <div
+        className={`about-card custom-card cursor-pointer w-full ${
+          theme === "dark"
+            ? "bg-[#141B22] text-white"
+            : "bg-[#ffffff] text-black"
+        } justify-center items-center flex flex-col gap-6 relative `}
+      >
+        <div className="text-center text-[18px] text-[#8D8F93] justify-center flex items-center w-full h-[40vh]">
+          {index === 0 && (
+            <Canvas camera={{ position: [0, 0, 10], fov: 50 }}>
+              <ambientLight intensity={0.5} />
+              <Environment preset="sunset" />
+              <OrbitControls />
+              <Model1 />
+            </Canvas>
+          )}
+          {index === 1 && (
+            <Canvas camera={{ position: [0, 0, 10], fov: 50 }}>
+              <ambientLight intensity={0.5} />
+              <Environment preset="sunset" />
+              <OrbitControls  />
+              <Model2 />
+            </Canvas>
+          )}
         </div>
-        <div className="text-center text-[18px] text-[#8D8F93] " >
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Atque,
-          voluptas!
-        </div>
+        <div className="text-center text-[18px] text-[#8D8F93] p-5 ">
+            {item?.title}
+          </div>
       </div>
     </>
   );

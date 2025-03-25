@@ -5,7 +5,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-export default function FaqCard({ theme }) {
+export default function FaqCard({ theme, item }) {
   return (
     <Accordion type="single" collapsible className="w-full">
       <AccordionItem
@@ -16,9 +16,9 @@ export default function FaqCard({ theme }) {
         } border-none  `}
         value="item-1"
       >
-        <AccordionTrigger className='px-5 border-none' >Is it accessible?</AccordionTrigger>
+        <AccordionTrigger className='px-5 border-none text-ellipsis overflow-hidden whitespace-nowrap' >{item.question}</AccordionTrigger>
         <AccordionContent className='px-5 border-none' >
-          Yes. It adheres to the WAI-ARIA design pattern.
+          {item.answer}
         </AccordionContent>
       </AccordionItem>
     </Accordion>

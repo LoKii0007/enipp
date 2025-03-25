@@ -1,10 +1,11 @@
 import PageHeading from "@/components/PageHeading";
 import TeamComponent from "@/components/TeamComponent";
 import React, { useEffect, useState } from "react";
+import useTheme from "@/hooks/ThemeContex"; 
 
 const Team = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-
+  const { theme } = useTheme();
   function responsive() {
     if (window.innerWidth < 768) {
       setIsMobile(true);
@@ -24,9 +25,11 @@ const Team = () => {
   
   return (
     <>
-      <div className="contact-us min-h-screen w-screen">
+      <div className="contact-us min-h-screen w-full">
         <PageHeading heading="Contact Us" />
-        <TeamComponent isMobile={isMobile} />
+        <div className={`flex justify-center items-center w-full py-12 ${theme === 'dark' ? 'bg-[#040B11]' : 'bg-[#EEEEEE]'}`}> 
+          <TeamComponent isMobile={isMobile} />
+        </div>
       </div>
     </>
   );

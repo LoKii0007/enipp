@@ -27,14 +27,14 @@ const Navbar = () => {
         } w-full z-50 gap-12 text-xl justify-center items-center`}
       >
         <div className="nav-item py-2 flex justify-center text-3xl items-center gap-2">
-          <img src="/images/enipp-logo.png" className="w-8" alt="" />
-          ENIPP
+          <img src="/images/enipp-logo.png" className="w-8 h-8" alt="" />
+          <div className=" flex items-center justify-center leading-none">ENIPP</div>
         </div>
         {navMenu.map((item, index) => (
           <div
             onClick={() => navigate(`/${item.route}`)}
             key={index}
-            className="nav-item py-2 hover:text-emerald-500 cursor-pointer"
+            className="nav-item py-2 hover:text-enipp-purple1 cursor-pointer"
           >
             {item.name}
           </div>
@@ -42,7 +42,7 @@ const Navbar = () => {
         {theme === "dark" ? (
           <div
             onClick={() => setTheme("light")}
-            className="nav-item p-3 hover:text-emerald-500 text-emerald-500 rounded-full bg-[#141B22] cursor-pointer"
+            className="nav-item p-3 hover:text-enipp-purple1 text-enipp-purple1 rounded-full bg-[#141B22] cursor-pointer"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -89,7 +89,7 @@ const Navbar = () => {
             {theme === "dark" ? (
               <div
                 onClick={() => setTheme("light")}
-                className="nav-item p-3 hover:text-emerald-500 text-emerald-500 rounded-full bg-[#141B22] cursor-pointer"
+                className="nav-item p-3 hover:text-enipp-purple1 text-enipp-purple1 rounded-full bg-[#141B22] cursor-pointer"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

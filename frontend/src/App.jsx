@@ -16,25 +16,33 @@ import About from "./screens/About";
 import './css/home.css'
 import './index.css'
 
+// Prismic imports
+// import { PrismicProvider } from '@prismicio/react';
+// import { createClient, linkResolver } from './prismic';
+
 function App() {
+  // const client = createClient();
+  
   return (
     <>
       <AuthProvider>
         <ThemeProvider>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/roadmap" element={<Roadmap />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/team" element={<Team />} />
-            <Route path="/contact" element={<ContactUs />} />
-            {/* <Route path="/coming-soon" element={<ComingSoonPage />} /> */}
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/login" element={<Login />} />
-          </Routes>
+          {/* <PrismicProvider client={client} linkResolver={linkResolver}> */}
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/roadmap" element={<Roadmap />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/team" element={<Team />} />
+              <Route path="/contact" element={<ContactUs />} />
+              {/* <Route path="/coming-soon" element={<ComingSoonPage />} /> */}
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/login" element={<Login />} />
+            </Routes>
+          {/* </PrismicProvider> */}
+          <Footer />
         </ThemeProvider>
-        <Footer />
         <Toaster />
       </AuthProvider>
     </>

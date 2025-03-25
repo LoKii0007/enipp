@@ -13,7 +13,7 @@ const RoadmapComponent = () => {
             : "bg-[#EEEEEE] text-black"
         } w-full py-12 md:py-[100px] flex flex-col gap-[60px] `}
       >
-        <h1 className="text-4xl w-full text-center">ROADMAP</h1>
+        <h1 className="text-4xl w-full text-center">ROADMAP <br /> <span className="font-[quicksand] text-2xl font-bold">2025</span></h1>
         <Roadmap theme={theme} />
       </div>
     </>

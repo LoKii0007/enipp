@@ -3,8 +3,13 @@
   src: url('/fonts/Enipp-Font.otf');
 }
 
+@font-face {
+  font-family: 'quicksand';
+  src: url('/fonts/Quicksand.ttf');
+}
+
 body{
-  font-family: 'enipp';
+  font-family: 'enipp', 'quicksand';
   margin: 0%;
   padding: 0%;
   box-sizing: border-box;

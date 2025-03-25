@@ -39,7 +39,7 @@ const ContactForm = () => {
     >
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl">
         <div className="border border-gray-700 p-6 text-center flex flex-col gap-5">
-          <span className="text-[#21E786] flex justify-center items-center text-3xl">
+          <span className="text-enipp-purple1 flex justify-center items-center text-3xl">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="50"
@@ -52,10 +52,10 @@ const ContactForm = () => {
             </svg>
           </span>
           <h2 className="font-bold text-xl mt-2">Location</h2>
-          <p className="font-sans">2163 Phillips Gap Rd West Jefferson</p>
+          <p className="font-sans">d-52 kalkaji, new delhi, 110019</p>
         </div>
         <div className="border border-gray-700 p-6 text-center flex flex-col gap-5">
-          <span className="text-[#21E786] flex justify-center items-center text-3xl">
+          <span className="text-enipp-purple1 flex justify-center items-center text-3xl">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="50"
@@ -68,10 +68,10 @@ const ContactForm = () => {
             </svg>
           </span>
           <h2 className="font-bold text-xl mt-2">Email</h2>
-          <p className="font-sans">Info.avitex@gmail.com</p>
+          <p className="font-sans">info@enipp.com</p>
         </div>
         <div className="border border-gray-700 p-6 text-center flex flex-col gap-5">
-          <span className="text-[#21E786] flex justify-center items-center text-3xl">
+          <span className="text-enipp-purple1 flex justify-center items-center text-3xl">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="50"
@@ -87,7 +87,7 @@ const ContactForm = () => {
             </svg>
           </span>
           <h2 className="font-bold text-xl mt-2">Phone</h2>
-          <p className="font-sans">+1 666 8888</p>
+          <p className="font-sans">+91 9876543210</p>
         </div>
       </div>
 
@@ -137,7 +137,7 @@ const ContactForm = () => {
         <div className="w-full flex justify-center items-center mt-5">
           <button
             type="submit"
-            className={`flex items-center justify-center gap-2 border-[#21E786] border  ${
+            className={`flex items-center justify-center gap-2 border-enipp-purple1 after:bg-gradient-to-r after:from-enipp-purple1 after:to-enipp-purple2 border  ${
               theme === "dark"
                 ? " text-white"
                 : " text-black"

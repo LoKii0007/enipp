@@ -4,10 +4,12 @@ import { db } from "../firebase/firebase";
 import toast from "react-hot-toast";
 import { Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
+import useTheme from "@/hooks/ThemeContex";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const { theme } = useTheme()
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -25,30 +27,30 @@ const Footer = () => {
 
   return (
     <>
-      <footer className="w-full px-5 pt-12 flex flex-col gap-6 bg-[#787878] text-[#ffffff] md:pt-[100px] md:px-12 xl:px-[15%] ">
+      <footer className={`${theme === "dark" ? "bg-[#141B22] text-white" : "bg-[#ffffff] text-black"} w-full px-5 pt-12 flex flex-col gap-6 md:px-12 xl:px-[15%] `}>
         <div className="footer-top grid grid-cols-1 gap-12 justify-center items-center md:grid-cols-3">
           <div className="flex flex-col gap-4">
             <div className="flex gap-3 text-2xl">
-              <img className="w-5"  src="/images/enipp-logo.png" alt="" />
+              <img className="w-5 h-5"  src="/images/enipp-logo.png" alt="" />
               ENIPP
             </div>
-            <p className="text-left font-sans">
+            <p className="text-left font-[quicksand]">
             Enipp is perfect way to bring your art to life
             </p>
-            <p className="text-left font-sans">
+            <p className="text-left font-[quicksand]">
             Address: D-52 kalkaji, 110019, New Delhi, India 
             </p>
-            <p className="text-left font-sans">
+            <p className="text-left font-[quicksand]">
             email: Info@enipp.com <br /> Phone: +91-991000515
             </p>
           </div>
           <div className="grid grid-cols-2 items-center">
             <div className="flex flex-col gap-3">
-              <div className="py-2">Categories</div>
-              <Link className="capitalize py-2 text-[#c3c3c5]">AR</Link>
-              <Link className="capitalize py-2 text-[#c3c3c5]">VR</Link>
-              <Link className="capitalize py-2 text-[#c3c3c5]">Collaboration</Link>
-              <Link className="capitalize py-2 text-[#c3c3c5]">Custom Design</Link>
+              <div className="py-2">Services</div>
+              <Link className="capitalize py-2 text-[#c3c3c5]">No code Editor</Link>
+              <Link className="capitalize py-2 text-[#c3c3c5]">Custom Orders</Link>
+              <Link className="capitalize py-2 text-[#c3c3c5]">Customization</Link>
+              <Link className="capitalize py-2 text-[#c3c3c5]">Order Now</Link>
             </div>
             <div className="flex flex-col gap-3 text-left">
               <div className="py-2">Links</div>
@@ -68,12 +70,12 @@ const Footer = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className=" p-3 w-full bg-[#838383] text-[#C2C3C5] border-none focus:ring-0 focus:outline-none md:w-2/3"
+              className={`${theme === "dark" ? "bg-[#040B11] text-white" : "bg-[#EEEEEE] text-black"} p-3 w-full font-[quicksand] border-none focus:ring-0 focus:outline-none md:w-2/3`}
             />
             <button
               disabled={!email || loading}
               type="submit"
-              className="w-[140px] py-3 bg-[#21E786] text-black tf-button flex justify-center items-center font-bold after:!bg-[#5865F2]"
+              className="w-[140px] py-3 bg-gradient-to-r from-enipp-purple1 to-enipp-purple2 text-black tf-button flex justify-center items-center font-bold after:!bg-[#5865F2]"
             >
               <div className="z-20">
                 {loading ? <Loader2 className=" animate-spin" /> : "SIGNUP"}
@@ -85,7 +87,7 @@ const Footer = () => {
         <div className="footer-bottom flex flex-col justify-center items-center pb-4 md:flex-row md:justify-between gap-4 ">
           <div>ENIPP - <span className="font-sans" >2025</span> All rights reserved</div>
           <div className="flex gap-5">
-            <Link to='https://www.instagram.com/enippofficial/' target="_blank" className="ig-icon p-2 cursor-pointer ">
+            <Link to='https://www.instagram.com/enipp_official/' target="_blank" className="ig-icon p-2 cursor-pointer ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"

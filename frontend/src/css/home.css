@@ -68,7 +68,6 @@
   position: absolute;
   width: 0%;
   height: 90%;
-  background-color: #21E378;
   transition: all 0.3s;
   z-index: 10;
 }
@@ -110,16 +109,20 @@
   transition: all .3s ease;
 }
 .custom-card::after{
-  border-bottom: 5px solid rgb(33, 231, 134);
-  border-right: 5px solid rgb(33, 231, 134);
+  border-bottom: 5px solid #c463a8;
+  border-right: 5px solid #c463a8;
   bottom: 0%;
   right: 0%;
 }
 .custom-card::before{
-  border-top: 5px solid rgb(33, 231, 134);
-  border-left: 5px solid rgb(33, 231, 134);
+  border-top: 5px solid #c463a8;
+  border-left: 5px solid #c463a8;
   TOP: 0%;
   left: 0%;
+}
+
+.card-desc{
+  font-family: 'quicksand';
 }
 
 .custom-card:hover::after, .custom-card:hover::before{
