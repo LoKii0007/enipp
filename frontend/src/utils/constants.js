@@ -23,20 +23,20 @@ export const thumnails = [
 
 export const services = [
   {
-    title: "Templates",
-    desc: "Pick from ready-made AR cards and 3D assets for quick use.",
+    title: "Template library",
+    desc: "Choose a template from the ever growing library of AR experiences.",
   },
   {
-    title: "No Code Editor",
-    desc: "Easily edit AR cards and 3D assets without coding skills.",
+    title: "No-Code Editor",
+    desc: "Easily upload a card and customise a template without any code.",
   },
   {
-    title: "Custom Orders",
-    desc: "Get unique AR cards and 3D assets tailored to your needs.",
+    title: "Custom experience",
+    desc: "Reach out to us to have a custom experience delivered in just one week!.",
   },
   {
-    title: "Customization",
-    desc: "Modify AR cards and 3D assets to match your vision.",
+    title: "Buy now",
+    desc: "Can't print? Purchase one of our cards and customize it yourself after you receive it!",
   },
 ];
 
@@ -44,33 +44,33 @@ export const services = [
 
 export const team = [
   {
-    name: "Kabir Pahwas",
+    name: "Kabir Singh",
     img: "/images/team/kabir.png",
-    title: "CEO/Founder",
+    title: "Marketing & Sales",
     desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
   },
   {
     name: "Hardik Patel",
     img: "/images/team/hardik.png",
-    title: "Creative head",
+    title: "Creative Head",
     desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
   },
   {
-    name: "Loki",
+    name: "Lokesh Yadav",
     img: "/images/team/loki.png",
-    title: "nakli CTO",
+    title: "Front-end Developer",
     desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
   },
   {
-    name: "Sudhir",
+    name: "Sudhir Kumar",
     img: "/images/team/sudhir.png",
-    title: "CTO",
+    title: "XR Developer",
     desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
   },
   {
-    name: "Kanak",
+    name: "Kanak Saini",
     img: "/images/team/kanak.png",
-    title: "Creative head",
+    title: "Texture Artist",
     desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
   },
 ];
@@ -78,19 +78,19 @@ export const team = [
 export const roadmap = [
   {
     quarter: "Quarter 1",
-    tasks: ["build editor", "Beta launch", "design templates"],
+    tasks: ["Build No-Code Editor", "Beta Launch ", "Open Marketplace"],
   },
   {
     quarter: "Quarter 2",
-    tasks: ["gain traction", "proof concept", "track analytics"],
+    tasks: ["Gain early Traction", "Proof of Concept", "Fix and Refine "],
   },
   {
     quarter: "Quarter 3",
-    tasks: ["raise funds", "grow team", "add ML"],
+    tasks: ["Raise Funds", "Grow Team", "Add Artificial Intelligence"],
   },
   {
     quarter: "Quarter 4",
-    tasks: ["creator system", "scale up", "broaden categories"],
+    tasks: ["Creator Collaborations", "Scale Up and Monetise", "Expand Categories"],
   },
 ];
 
