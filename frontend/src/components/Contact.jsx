@@ -52,7 +52,7 @@ const ContactForm = () => {
             </svg>
           </span>
           <h2 className="font-bold text-xl mt-2">Location</h2>
-          <p className="font-sans">d-52 kalkaji, new delhi, 110019</p>
+          <p className="font-sans">D-52 kalkaji, New Delhi, 110019</p>
         </div>
         <div className="border border-gray-700 p-6 text-center flex flex-col gap-5">
           <span className="text-enipp-purple1 flex justify-center items-center text-3xl">
@@ -68,7 +68,7 @@ const ContactForm = () => {
             </svg>
           </span>
           <h2 className="font-bold text-xl mt-2">Email</h2>
-          <p className="font-sans">info@enipp.com</p>
+          <p className="font-sans">Admin@enipp.com</p>
         </div>
         <div className="border border-gray-700 p-6 text-center flex flex-col gap-5">
           <span className="text-enipp-purple1 flex justify-center items-center text-3xl">
@@ -87,7 +87,7 @@ const ContactForm = () => {
             </svg>
           </span>
           <h2 className="font-bold text-xl mt-2">Phone</h2>
-          <p className="font-sans">+91 9876543210</p>
+          <p className="font-sans">+91 9971175159</p>
         </div>
       </div>
 
