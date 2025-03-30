@@ -1,6 +1,20 @@
 import useTheme from "@/hooks/ThemeContex";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import AuthHook from "@/hooks/AuthContext";
+import toast from "react-hot-toast";
+import supabase from "@/supabase/supabase";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 
 const navMenu = [
   { name: "Home", route: "home" },
@@ -14,11 +28,159 @@ const Navbar = () => {
   const { theme, setTheme } = useTheme();
   const [navBottom, setNavBottom] = useState(false);
   const navigate = useNavigate();
+  const { user, userLoggedIn, signOut, isEmailVerified, checkEmailVerification } = AuthHook();
+  const [showVerificationBanner, setShowVerificationBanner] = useState(false);
+  const [resendLoading, setResendLoading] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false);
+  const [showSignOutDialog, setShowSignOutDialog] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
+
+  useEffect(() => {
+    if (userLoggedIn && !isEmailVerified) {
+      setShowVerificationBanner(true);
+    } else {
+      setShowVerificationBanner(false);
+    }
+  }, [userLoggedIn, isEmailVerified]);
+
+  useEffect(() => {
+    // Check email verification status when user logs in
+    if (userLoggedIn) {
+      checkEmailVerification();
+    }
+  }, [userLoggedIn]);
+
+  const handleResendVerification = async () => {
+    if (!user?.email) return;
+    
+    setResendLoading(true);
+    try {
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email: user.email,
+        options: {
+          emailRedirectTo: window.location.origin + '/email-confirmation',
+        }
+      });
+      
+      if (error) {
+        toast.error("Error sending verification email: " + error.message);
+        return;
+      }
+      
+      toast.success("Verification email has been resent. Please check your inbox.");
+    } catch (error) {
+      toast.error("Error: " + error.message);
+    } finally {
+      setResendLoading(false);
+    }
+  };
+
+  const handleSignOut = async () => {
+    setIsSigningOut(true);
+    try {
+      const { error } = await signOut();
+      if (error) {
+        toast.error("Sign Out Error: " + error.message);
+        return;
+      }
+      toast.success("Successfully signed out");
+      navigate("/");
+    } catch (error) {
+      toast.error("Sign Out Error: " + error.message);
+    } finally {
+      setIsSigningOut(false);
+      setShowSignOutDialog(false);
+    }
+  };
+
+  const openSignOutDialog = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setShowSignOutDialog(true);
+  };
 
   useEffect(() => {}, [theme]);
 
   return (
     <>
+      {showVerificationBanner && (
+        <div className={`w-full py-2 px-4 text-center ${theme === "dark" ? "bg-zinc-900 text-white" : "bg-white text-zinc-900"}`}>
+          <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <p className="text-white mb-2 md:mb-0">
+              Please verify your email address to access all features.
+            </p>
+            <div className="flex gap-2">
+              <button
+                onClick={handleResendVerification}
+                disabled={resendLoading}
+                className={`px-3 py-1 text-sm font-medium rounded-md ${
+                  theme === "dark" 
+                    ? "bg-enipp-purple1 hover:bg-enipp-purple2" 
+                    : "bg-enipp-purple1 hover:bg-enipp-purple2"
+                } text-white`}
+              >
+                {resendLoading ? "Sending..." : "Resend Verification"}
+              </button>
+              <button
+                onClick={() => setShowVerificationBanner(false)}
+                className={`px-3 py-1 text-sm font-medium rounded-md ${
+                  theme === "dark" 
+                    ? "bg-transparent border border-amber-700" 
+                    : "bg-transparent border border-amber-500"
+                } text-white`}
+              >
+                Dismiss
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      
+      {/* Sign Out Confirmation Dialog */}
+      <Dialog open={showSignOutDialog} onOpenChange={setShowSignOutDialog}>
+        <DialogContent className={`sm:max-w-[425px] ${
+          theme === "dark" 
+            ? "bg-zinc-900 text-white border-zinc-800" 
+            : "bg-white text-black border-zinc-300"
+        }`}>
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold">Sign Out Confirmation</DialogTitle>
+            <DialogDescription className={theme === "dark" ? "text-zinc-400" : "text-zinc-500"}>
+              Are you sure you want to sign out from your account?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="flex flex-row justify-end gap-2 pt-4">
+            <Button
+              variant="outline"
+              onClick={() => setShowSignOutDialog(false)}
+              className={`${
+                theme === "dark"
+                  ? "bg-transparent border-zinc-700 text-white hover:bg-zinc-800 hover:text-white"
+                  : "bg-transparent border-zinc-300 text-black hover:bg-zinc-100 hover:text-black"
+              } tf-button relative rounded-none`}
+            >
+              <div className="z-20">Cancel</div>
+            </Button>
+            <Button
+              onClick={handleSignOut}
+              className={`w-[100px] bg-gradient-to-r from-enipp-purple1 to-enipp-purple2 border hover:opacity-90 tf-button relative
+                ${theme === "dark" ? "after:!bg-zinc-800 text-white border-white" : "after:!bg-[#ffffff] text-black border-black"}
+                rounded-none`}
+              disabled={isSigningOut}
+            >
+              {isSigningOut ? (
+                <div className="z-20 flex items-center">
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                </div>
+              ) : (
+                <div className="z-20">Sign Out</div>
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      
       <nav
         className={`sticky hidden md:flex top-0 left-0 py-3 px-8 ${
           theme === "dark"
@@ -28,7 +190,7 @@ const Navbar = () => {
       >
         <div className="nav-item py-2 flex justify-center text-3xl items-center gap-2">
           <img src="/images/enipp-logo.png" className="w-8 h-8" alt="" />
-          <div className=" flex items-center justify-center leading-none">ENIPP</div>
+          <Link to="/" className=" flex items-center justify-center leading-none font-extrabold">ENIPP</Link>
         </div>
         {navMenu.map((item, index) => (
           <div
@@ -39,6 +201,21 @@ const Navbar = () => {
             {item.name}
           </div>
         ))}
+        {userLoggedIn ? (
+          <div
+            onClick={openSignOutDialog}
+            className="nav-item py-2 hover:text-enipp-purple1 cursor-pointer flex items-center gap-2"
+          >
+            <span>Sign Out</span>
+          </div>
+        ) : (
+          <div
+            onClick={() => navigate("/login")}
+            className="nav-item py-2 hover:text-enipp-purple1 cursor-pointer"
+          >
+            Sign In
+          </div>
+        )}
         {theme === "dark" ? (
           <div
             onClick={() => setTheme("light")}
@@ -83,7 +260,7 @@ const Navbar = () => {
         <div className="nav-top flex justify-between items-center ">
           <div className="flex gap-2 items-center">
             <img src="/images/enipp-logo.png" className="w-6" alt="" />
-            <div className="text-2xl">ENIPP</div>
+            <Link to="/" className="text-2xl font-extrabold">ENIPP</Link>
           </div>
           <div className="flex gap-3 items-center">
             {theme === "dark" ? (
@@ -162,6 +339,11 @@ const Navbar = () => {
             navBottom ? "h-[244px] pb-3" : "h-0 p-0"
           }`}
         >
+          {userLoggedIn && (
+            <div className="nav-item py-2 text-enipp-purple1 font-medium border-b border-zinc-800 mb-2 pb-3">
+              {user?.displayName}
+            </div>
+          )}
           {navMenu.map((item, index) => (
             <div
               onClick={() => navigate(`/${item.route}`)}
@@ -171,6 +353,21 @@ const Navbar = () => {
               {item.name}
             </div>
           ))}
+          {userLoggedIn ? (
+            <div
+              onClick={openSignOutDialog}
+              className="nav-item py-2 cursor-pointer text-enipp-purple1"
+            >
+              Sign Out
+            </div>
+          ) : (
+            <div
+              onClick={() => navigate("/login")}
+              className="nav-item py-2 cursor-pointer text-enipp-purple1"
+            >
+              Sign In
+            </div>
+          )}
         </div>
       </nav>
     </>

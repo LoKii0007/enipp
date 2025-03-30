@@ -9,12 +9,13 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import CustomCard from "./CustomCard";
-import { signInWithPopup, createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, googleProvider } from "@/firebase/firebase";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import AuthHook from "@/hooks/AuthContext";
+import supabase from "@/supabase/supabase";
+import { Loader2 } from "lucide-react";
+
 
 export default function SignUp() {
   const {
@@ -23,15 +24,28 @@ export default function SignUp() {
     formState: { errors },
   } = useForm();
   const [loading, setLoading] = useState(false);
+  const [verificationSent, setVerificationSent] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+  const [resendLoading, setResendLoading] = useState(false);
   const { setUser } = AuthHook();
   const navigate = useNavigate();
 
   const signInWithGoogle = async () => {
     setLoading(true);
     try {
-      const result = await signInWithPopup(auth, googleProvider);
-      console.log("User signed in:", result.user);
-      navigate("/"); // Redirect after login
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: window.location.origin,
+        }
+      });
+      
+      if (error) {
+        toast.error("Google Sign-In Error: " + error.message);
+        return;
+      }
+      
+      toast.success("Redirecting to Google sign in...");
     } catch (error) {
       console.error("Google Sign-In Error:", error.message);
     } finally {
@@ -39,27 +53,122 @@ export default function SignUp() {
     }
   };
 
+  const handleResendConfirmation = async () => {
+    setResendLoading(true);
+    try {
+      if (!userEmail) {
+        toast.error("No email address to send verification to");
+        return;
+      }
+      
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email: userEmail,
+      });
+      
+      if (error) {
+        toast.error("Error sending confirmation email: " + error.message);
+        return;
+      }
+      
+      toast.success("Verification email has been resent. Please check your inbox.");
+    } catch (error) {
+      toast.error("Error: " + error.message);
+    } finally {
+      setResendLoading(false);
+    }
+  };
+
   const onSubmit = async (data) => {
     setLoading(true);
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        data.email,
-        data.password
-      );
-      setUser({
-        email: userCredential.user.email,
-        token: userCredential.user.accessToken,
+      const { data: authData, error } = await supabase.auth.signUp({
+        email: data.email,
+        password: data.password,
+        options: {
+          data: {
+            name: data.name,
+          },
+          emailRedirectTo: window.location.origin + '/email-confirmation',
+        }
       });
-      toast.success("User signed up successfully");
-      navigate("/"); // Redirect after signup
+      
+      if (error) {
+        toast.error(error.message || "An error occurred. Please try again.");
+        return;
+      }
+      
+      // Store user data with display name in AuthContext
+      if (authData.user) {
+        const userWithName = {
+          ...authData.user,
+          user_metadata: {
+            ...authData.user.user_metadata,
+            name: data.name
+          }
+        };
+        setUser({
+          email: authData.user.email,
+          token: authData.session?.access_token,
+          displayName: data.name,
+          emailVerified: false
+        });
+      }
+      
+      setUserEmail(data.email);
+      setVerificationSent(true);
+      toast.success("An email has been sent to verify your account.");
     } catch (error) {
-      toast.error("Sign Up Error:", error.message);
-      console.error("Sign Up Error:", error.message);
+      toast.error(error.message || "An error occurred. Please try again.");
     } finally {
       setLoading(false);
     }
   };
+
+  if (verificationSent) {
+    return (
+      <div className="min-h-screen flex justify-center items-center bg-black w-full">
+        <Card className="border-0 rounded-none bg-black w-full max-w-xl mx-4">
+          <CardHeader className="space-y-1">
+            <CardTitle className="text-[36px] font-bold text-center tracking-tight text-white">
+              Verify Your Email
+            </CardTitle>
+            <CardDescription className="text-zinc-400 text-center text-[18px]">
+              We've sent a verification email to {userEmail}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="bg-emerald-900/30 border border-emerald-700 p-6 rounded text-center">
+              <p className="text-white mb-6">
+                Please check your inbox and click the verification link to complete your registration.
+              </p>
+              <p className="text-zinc-400 mb-6">
+                If you don't see the email, check your spam folder.
+              </p>
+              <Button
+                type="button"
+                className="bg-emerald-500 hover:bg-emerald-600 text-white border-none"
+                onClick={handleResendConfirmation}
+                disabled={resendLoading}
+              >
+                {resendLoading ? <Loader2 className="animate-spin w-4 h-4" /> : "Resend Verification Email"}
+              </Button>
+            </div>
+            <div className="flex justify-center mt-6">
+              <Button
+                type="button"
+                variant="outline"
+                className="bg-transparent border-white text-white hover:bg-white hover:text-black"
+                onClick={() => navigate("/login")}
+              >
+                Go to Login
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen grid grid-cols-2 items-center bg-black w-full h-screen overflow-hidden">
@@ -100,7 +209,7 @@ export default function SignUp() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 font-[Quicksand]">
               <Input
                 type="text"
                 placeholder="Name"
@@ -138,10 +247,10 @@ export default function SignUp() {
 
               <Button
                 type="submit"
-                className="w-full bg-emerald-500 hover:bg-emerald-600 text-white rounded-none border-none"
+                className="w-full bg-gradient-to-r from-enipp-purple1 to-enipp-purple2 border border-enipp-purple1 text-white rounded-none"
                 disabled={loading}
               >
-                {loading ? "Signing Up..." : "SIGN UP"}
+                {loading ? <Loader2 className="animate-spin w-4 h-4" /> : "SIGN UP"}
               </Button>
             </form>
             <div className="relative my-4">
@@ -200,3 +309,4 @@ export default function SignUp() {
     </div>
   );
 }
+

@@ -30,16 +30,17 @@ const Home = () => {
     };
   }, []);
 
-
   return (
     <>
       <div className=" flex flex-col w-full items-center m-0 p-0 overflow-hidden">
-        <div className={`${
+        <div
+          className={`${
             theme === "dark"
               ? "bg-[#040B11] text-white"
               : "bg-[#EEEEEE] text-black"
-          } flex w-full h-[92vh] items-center justify-evenly md:px-12 xl:px-12 `}>
-          <div className="hero-left flex flex-col h-full gap-5 items-center justify-center">
+          } flex w-full h-[92vh] items-center justify-evenly md:px-12 xl:px-12 `}
+        >
+          <div className="hero-left flex flex-col h-full gap-5 items-center justify-center font-extrabold">
             <div className="uppercase hidden break-words  tracking-widest text-left w-full md:block md:text-[80px] md:leading-[120%]">
               with <span className="text-enipp-purple1">ENIPP</span> <br />{" "}
               Express Beyond <br /> Reality
@@ -50,13 +51,25 @@ const Home = () => {
               ar/vr <br /> experiences
             </div>
             <div className="text-left w-full">
-            Create,Customize & Share Your 3D Experiences with Ease! 
+              Create,Customize & Share Your 3D Experiences with Ease!
             </div>
             <div className="mt-10 w-full flex justify-start gap-8 ">
-              <button className="bg-gradient-to-r from-enipp-purple1 to-enipp-purple2 border border-enipp-purple1 text-[#141B22] px-8 py-3 tf-button after:!bg-[#787878] flex justify-center items-center ">
+              <button
+                className={`flex justify-center items-center bg-gradient-to-r from-enipp-purple1 to-enipp-purple2 border border-enipp-purple1 text-[#141B22] px-8 py-3 tf-button 
+               ${
+                 theme === "dark"
+                   ? "after:!bg-[#040B11] text-white border-white"
+                   : "after:!bg-[#ffffff] text-black border-black"
+               }
+               rounded-none`}
+              >
                 <div className="z-20">Get Started</div>
               </button>
-              <Link to="https://calendly.com/kabirsinghpahwa/get-in-touch" target="_blank"  className="bg-transparent border border-enipp-purple1 after:bg-gradient-to-r after:from-enipp-purple1 after:to-enipp-purple2 px-8 py-3 tf-button flex justify-center items-center ">
+              <Link
+                to="https://calendly.com/kabirsinghpahwa/get-in-touch"
+                target="_blank"
+                className="bg-transparent border border-enipp-purple1 after:bg-gradient-to-r after:from-enipp-purple1 after:to-enipp-purple2 px-8 py-3 tf-button flex justify-center items-center "
+              >
                 <div className="z-20">Speak to us</div>
               </Link>
             </div>

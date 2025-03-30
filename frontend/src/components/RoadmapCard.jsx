@@ -10,7 +10,7 @@ const RoadmapCard = ({ theme, item }) => {
             : "bg-[#ffffff] text-black"
         } w-full md:w-1/3 flex-col gap-2 `}
       >
-        <h1>{item.quarter}</h1>
+        <h1 className="font-[Quicksand] font-extrabold">{item.quarter}</h1>
         {item.tasks.map((task, index) => (
           <h4 className="flex gap-2 items-center" key={index}>
             <img src="/images/enipp-logo.png" className="w-4 h-4 rounded-full" alt="" />

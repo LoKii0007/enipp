@@ -9,87 +9,251 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import CustomCard from "./CustomCard";
-import {
-  signInWithPopup,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  sendPasswordResetEmail,
-} from "firebase/auth";
-import { auth, googleProvider } from "@/firebase/firebase";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthHook from "@/hooks/AuthContext";
 import toast from "react-hot-toast";
+import supabase from "@/supabase/supabase";
+import { Loader2 } from "lucide-react";
 
 export default function Login() {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    getValues,
   } = useForm();
   const [loading, setLoading] = useState(false);
-  const { setUser } = AuthHook();
+  const [unconfirmedEmail, setUnconfirmedEmail] = useState(null);
+  const [resendLoading, setResendLoading] = useState(false);
+  const [forgotPasswordMode, setForgotPasswordMode] = useState(false);
+  const [resetPasswordLoading, setResetPasswordLoading] = useState(false);
+  const [resetEmailSent, setResetEmailSent] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+  const { setUser, signInWithRemember } = AuthHook();
   const navigate = useNavigate();
 
   const signInWithGoogle = async () => {
     setLoading(true);
     try {
-      const result = await signInWithPopup(auth, googleProvider);
-      if( !result){
-        toast.error("Google Sign-In Error: Unable to sign in");
-        return
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: window.location.origin,
+        }
+      });
+      
+      if (error) {
+        toast.error("Google Sign-In Error: " + error.message);
+        return;
       }
-      toast.success("User signed in successfully");
-      setUser({
-        email: result.user.email,
-        token: result.user.accessToken
-      })
-      console.log("User signed in:", result.user);
-      navigate("/");
+      
+      toast.success("Redirecting to Google sign in...");
     } catch (error) {
-      toast.error("Google Sign-In Error:", error.message);
+      toast.error("Google Sign-In Error: " + error.message);
     } finally {
       setLoading(false);
     }
   };
 
   const onSubmit = async (data) => {
+    if (forgotPasswordMode) {
+      handleForgotPassword(data);
+      return;
+    }
+    
     setLoading(true);
+    setUnconfirmedEmail(null);
+    
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        data.email,
-        data.password
-      );
-      if( !userCredential){
-        toast.error("Sign In Error: Unable to sign in");
-        return
-      }
-      toast.success("User signed in successfully");
-      setUser({
-        email: userCredential.user.email,
-        token: userCredential.user.accessToken,
+      const { data: authData, error } = await supabase.auth.signInWithPassword({
+        email: data.email,
+        password: data.password,
       });
+
+      if (error) {
+        // Check if the error is due to email not confirmed
+        if (error.message.toLowerCase().includes("email not confirmed")) {
+          setUnconfirmedEmail(data.email);
+          toast.error("Please confirm your email address before signing in");
+        } else {
+          toast.error("Sign In Error: " + error.message);
+        }
+        return;
+      }
+
+      // Get user metadata to get the name
+      const { data: userData } = await supabase.auth.getUser();
+      
+      // Use the new signInWithRemember function
+      signInWithRemember(
+        userData.user, 
+        authData.session.access_token,
+        rememberMe
+      );
+
+      toast.success("User signed in successfully");
       navigate("/");
     } catch (error) {
-      toast.error("Sign In Error:", error.message);
+      toast.error("Sign In Error: " + error.message);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleForgotPassword = async () => {
-    const email = prompt("Enter your email to reset password:");
-    if (email) {
-      try {
-        await sendPasswordResetEmail(auth, email);
-        alert("Password reset email sent. Check your inbox.");
-      } catch (error) {
-        console.error("Password Reset Error:", error.message);
-        alert("Error sending password reset email: " + error.message);
+  const handleResendConfirmation = async () => {
+    setResendLoading(true);
+    try {
+      const email = unconfirmedEmail || getValues("email");
+      
+      if (!email) {
+        toast.error("Please enter your email address");
+        return;
       }
+      
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email: email,
+        options: {
+          emailRedirectTo: window.location.origin + '/email-confirmation',
+        }
+      });
+      
+      if (error) {
+        toast.error("Error sending confirmation email: " + error.message);
+        return;
+      }
+      
+      toast.success("Confirmation email has been resent. Please check your inbox.");
+    } catch (error) {
+      toast.error("Error: " + error.message);
+    } finally {
+      setResendLoading(false);
     }
   };
+
+  const handleForgotPassword = async (data) => {
+    setResetPasswordLoading(true);
+    try {
+      const email = data.email;
+      if (!email) {
+        toast.error("Please enter your email address");
+        return;
+      }
+      
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: window.location.origin + '/reset-password',
+      });
+      
+      if (error) {
+        toast.error("Error sending password reset email: " + error.message);
+        return;
+      }
+      
+      setResetEmailSent(true);
+      toast.success("Password reset email sent. Please check your inbox.");
+    } catch (error) {
+      toast.error("Error: " + error.message);
+    } finally {
+      setResetPasswordLoading(false);
+    }
+  };
+
+  if (forgotPasswordMode) {
+    return (
+      <div className="min-h-screen grid grid-cols-1 items-center bg-black w-full h-screen overflow-hidden md:grid-cols-2">
+        <div className="signup-left hidden gap-3 px-5 justify-end overflow-hidden w-full md:flex">
+          <div className={`flex flex-col gap-8 custom-card-1 `}>
+            <CustomCard />
+            <CustomCard />
+            <CustomCard />
+            <CustomCard />
+            <CustomCard />
+            <CustomCard />
+          </div>
+          <div className={`flex flex-col gap-8 custom-card-2 `}>
+            <CustomCard />
+            <CustomCard />
+            <CustomCard />
+            <CustomCard />
+            <CustomCard />
+            <CustomCard />
+          </div>
+          <div className={`flex flex-col gap-8 custom-card-3 `}>
+            <CustomCard />
+            <CustomCard />
+            <CustomCard />
+            <CustomCard />
+            <CustomCard />
+            <CustomCard />
+          </div>
+        </div>
+        <div className="signup-right flex justify-center items-center w-full">
+          <Card className="border-0 rounded-none bg-black max-w-xl w-full">
+            <CardHeader className="space-y-1">
+              <CardTitle className="text-[36px] font-bold text-center tracking-tight text-white">
+                Reset Password
+              </CardTitle>
+              <CardDescription className="text-zinc-400 text-center text-[18px]">
+                {resetEmailSent 
+                  ? "Reset email has been sent" 
+                  : "Enter your email to receive a password reset link"}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {resetEmailSent ? (
+                <div className="space-y-4">
+                  <div className="bg-emerald-900/30 border border-emerald-700 p-6 rounded text-center">
+                    <p className="text-white mb-4">
+                      We've sent a password reset link to your email.
+                    </p>
+                    <p className="text-zinc-400 mb-6">
+                      Please check your inbox and spam folder. The link will expire after 24 hours.
+                    </p>
+                  </div>
+                  <Button
+                    className="w-full bg-zinc-800 hover:bg-zinc-700 text-white"
+                    onClick={() => setForgotPasswordMode(false)}
+                  >
+                    Back to Login
+                  </Button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 font-[Quicksand] font-semibold">
+                  <Input
+                    type="email"
+                    placeholder="Email"
+                    className="bg-zinc-800 px-4 py-3 text-white placeholder:text-zinc-400 border-none rounded-none"
+                    {...register("email", { required: "Email is required" })}
+                  />
+                  {errors.email && (
+                    <p className="text-red-500 text-sm">{errors.email.message}</p>
+                  )}
+
+                  <div className="grid grid-cols-2 gap-4 pt-2">
+                    <Button
+                      type="button"
+                      className="bg-zinc-800 hover:bg-zinc-700 text-white rounded-none tf-button after:!bg-gradient-to-r after:from-enipp-purple1 after:to-enipp-purple2"
+                      onClick={() => setForgotPasswordMode(false)}
+                    >
+                      <div className="z-20">Back to Login</div>
+                    </Button>
+                    <Button
+                      type="submit"
+                      className="bg-gradient-to-r from-enipp-purple1 to-enipp-purple2 border border-enipp-purple1 text-white rounded-none tf-button after:!bg-black"
+                      disabled={resetPasswordLoading}
+                    >
+                      {resetPasswordLoading ? <Loader2 className="animate-spin w-4 h-4"/> : <div className="z-20">Send Reset Link</div>}
+                    </Button>
+                  </div>
+                </form>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen grid grid-cols-1 items-center bg-black w-full h-screen overflow-hidden md:grid-cols-2">
@@ -130,7 +294,7 @@ export default function Login() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 font-[Quicksand] font-semibold">
               <Input
                 type="email"
                 placeholder="Email"
@@ -159,29 +323,47 @@ export default function Login() {
                 </p>
               )}
 
+              {unconfirmedEmail && (
+                <div className="bg-amber-900/30 border border-amber-700 p-3 rounded">
+                  <p className="text-amber-300 text-sm mb-2">
+                    Your email ({unconfirmedEmail}) needs to be verified before signing in.
+                  </p>
+                  <Button
+                    type="button"
+                    className="w-full bg-gradient-to-r from-enipp-purple1 to-enipp-purple2 border border-enipp-purple1 tf-button after:!bg-black text-white rounded-none"
+                    onClick={handleResendConfirmation}
+                    disabled={resendLoading}
+                  >
+                    {resendLoading ? <Loader2 className="animate-spin w-4 h-4"/> : <div className="z-20">Resend Confirmation Email</div>}
+                  </Button>
+                </div>
+              )}
+
               <div className="flex justify-between items-center">
-                <label className="flex items-center space-x-2">
+                <label className="flex items-center space-x-2 cursor-pointer">
                   <input
                     type="checkbox"
-                    className="form-checkbox bg-zinc-800"
+                    className="form-checkbox bg-zinc-800 rounded border-zinc-600 text-enipp-purple1 focus:ring-enipp-purple1"
+                    checked={rememberMe}
+                    onChange={() => setRememberMe(!rememberMe)}
                   />
                   <span className="text-white">Remember me</span>
                 </label>
-                <a
-                  onClick={handleForgotPassword}
-                  href="/forgot-password"
-                  className="text-emerald-500 hover:underline"
+                <button
+                  type="button"
+                  onClick={() => setForgotPasswordMode(true)}
+                  className="text-enipp-purple1 hover:underline"
                 >
                   Forgot password?
-                </a>
+                </button>
               </div>
 
               <Button
                 type="submit"
-                className="w-full bg-emerald-500 hover:bg-emerald-600 text-white rounded-none border-none"
+                className="w-full flex justify-center items-center bg-gradient-to-r from-enipp-purple1 to-enipp-purple2 border border-enipp-purple1 text-white tf-button after:!bg-black rounded-none "
                 disabled={loading}
               >
-                {loading ? "Signing In..." : "SIGN IN"}
+                {loading ? <Loader2 className="animate-spin w-4 h-4"/> : <div className="z-20">SIGN IN</div>}
               </Button>
             </form>
 

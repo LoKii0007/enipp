@@ -16,8 +16,8 @@ export default function FaqCard({ theme, item }) {
         } border-none  `}
         value="item-1"
       >
-        <AccordionTrigger className='px-5 border-none text-ellipsis overflow-hidden whitespace-nowrap' >{item.question}</AccordionTrigger>
-        <AccordionContent className='px-5 border-none' >
+        <AccordionTrigger className='px-5 border-none text-ellipsis overflow-hidden whitespace-nowrap font-extrabold' >{item.question}</AccordionTrigger>
+        <AccordionContent className='px-5 border-none ' >
           {item.answer}
         </AccordionContent>
       </AccordionItem>
