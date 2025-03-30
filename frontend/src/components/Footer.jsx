@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { collection, addDoc } from "firebase/firestore";
-import { db } from "../firebase/firebase";
+import supabase from "@/supabase/supabase";
 import toast from "react-hot-toast";
 import { Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -15,10 +14,16 @@ const Footer = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await addDoc(collection(db, "subscribers"), { email });
+      const { data, error } = await supabase
+        .from('subscribers')
+        .insert([{ email }]);
+        
+      if (error) throw error;
+      
       toast.success("Email added successfully.");
       setEmail("");
     } catch (error) {
+      console.error("Error adding email:", error);
       toast.error("Error adding email.");
     } finally {
       setLoading(false);

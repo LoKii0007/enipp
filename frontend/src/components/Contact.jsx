@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { collection, addDoc } from "firebase/firestore";
-import { db } from "@/firebase/firebase";
+import supabase from "@/supabase/supabase";
 import useTheme from "@/hooks/ThemeContex";
 import toast from "react-hot-toast";
 
@@ -22,10 +21,16 @@ const ContactForm = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await addDoc(collection(db, "users"), formData);
+      const { data, error } = await supabase
+        .from('contacts')
+        .insert([formData]);
+        
+      if (error) throw error;
+      
       toast.success("Message sent successfully.");
       setFormData({ name: "", email: "", phone: "", message: "" });
     } catch (error) {
+      console.error("Error submitting form:", error);
       toast.error('An error occurred. Please try again later.');
     }
     setLoading(false);
