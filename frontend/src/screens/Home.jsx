@@ -38,12 +38,12 @@ const Home = () => {
             theme === "dark"
               ? "bg-[#040B11] text-white"
               : "bg-[#EEEEEE] text-black"
-          } flex w-full h-[92vh] items-center justify-evenly md:px-12 xl:px-12 `}
+          } flex w-full h-[92vh] items-center justify-start md:px-12 xl:px-12 overflow-x-hidden `}
         >
           <div className="hero-left flex flex-col h-full gap-5 items-center justify-center font-extrabold">
-            <div className="uppercase hidden break-words  tracking-widest text-left w-full md:block md:text-[80px] md:leading-[120%]">
+            <div className="uppercase hidden break-words  tracking-widest text-left w-full md:block md:text-[80px] md:leading-[120%] word-spacing-[0px] letter-spacing-[-10px]">
               with <span className="text-enipp-purple1">ENIPP</span> <br />{" "}
-              Express Beyond <br /> Reality
+              express beyond <br /> reality
             </div>
             <div className="uppercase text-[40px] break-words  tracking-widest text-left w-full md:hidden">
               with <br /> <span className="text-enipp-purple1">ENIPP</span>{" "}
@@ -74,7 +74,7 @@ const Home = () => {
               </Link>
             </div>
           </div>
-          <div className="hero-right hidden w-[40%] h-[70vh] md:block ">
+          <div className="hero-right hidden w-1/2 h-full md:block absolute right-0 ">
             <Model />
           </div>
         </div>

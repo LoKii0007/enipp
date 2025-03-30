@@ -15,7 +15,7 @@ import toast from "react-hot-toast";
 import AuthHook from "@/hooks/AuthContext";
 import supabase from "@/supabase/supabase";
 import { Loader2 } from "lucide-react";
-
+import useTheme from "@/hooks/ThemeContex";
 
 export default function SignUp() {
   const {
@@ -29,22 +29,23 @@ export default function SignUp() {
   const [resendLoading, setResendLoading] = useState(false);
   const { setUser } = AuthHook();
   const navigate = useNavigate();
+  const { theme } = useTheme()
 
   const signInWithGoogle = async () => {
     setLoading(true);
     try {
       const { data, error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
+        provider: "google",
         options: {
           redirectTo: window.location.origin,
-        }
+        },
       });
-      
+
       if (error) {
         toast.error("Google Sign-In Error: " + error.message);
         return;
       }
-      
+
       toast.success("Redirecting to Google sign in...");
     } catch (error) {
       console.error("Google Sign-In Error:", error.message);
@@ -60,18 +61,20 @@ export default function SignUp() {
         toast.error("No email address to send verification to");
         return;
       }
-      
+
       const { error } = await supabase.auth.resend({
-        type: 'signup',
+        type: "signup",
         email: userEmail,
       });
-      
+
       if (error) {
         toast.error("Error sending confirmation email: " + error.message);
         return;
       }
-      
-      toast.success("Verification email has been resent. Please check your inbox.");
+
+      toast.success(
+        "Verification email has been resent. Please check your inbox."
+      );
     } catch (error) {
       toast.error("Error: " + error.message);
     } finally {
@@ -87,34 +90,29 @@ export default function SignUp() {
         password: data.password,
         options: {
           data: {
-            name: data.name,
+            display_name: data.name,
           },
-          emailRedirectTo: window.location.origin + '/email-confirmation',
-        }
+          emailRedirectTo: `${
+            import.meta.env.VITE_REDIRECT_URL
+          }/email-confirmation`,
+        },
       });
-      
+
       if (error) {
         toast.error(error.message || "An error occurred. Please try again.");
         return;
       }
-      
+
       // Store user data with display name in AuthContext
       if (authData.user) {
-        const userWithName = {
-          ...authData.user,
-          user_metadata: {
-            ...authData.user.user_metadata,
-            name: data.name
-          }
-        };
         setUser({
           email: authData.user.email,
           token: authData.session?.access_token,
           displayName: data.name,
-          emailVerified: false
+          emailVerified: false,
         });
       }
-      
+
       setUserEmail(data.email);
       setVerificationSent(true);
       toast.success("An email has been sent to verify your account.");
@@ -140,7 +138,8 @@ export default function SignUp() {
           <CardContent className="space-y-4">
             <div className="bg-emerald-900/30 border border-emerald-700 p-6 rounded text-center">
               <p className="text-white mb-6">
-                Please check your inbox and click the verification link to complete your registration.
+                Please check your inbox and click the verification link to
+                complete your registration.
               </p>
               <p className="text-zinc-400 mb-6">
                 If you don't see the email, check your spam folder.
@@ -151,7 +150,11 @@ export default function SignUp() {
                 onClick={handleResendConfirmation}
                 disabled={resendLoading}
               >
-                {resendLoading ? <Loader2 className="animate-spin w-4 h-4" /> : "Resend Verification Email"}
+                {resendLoading ? (
+                  <Loader2 className="animate-spin w-4 h-4" />
+                ) : (
+                  "Resend Verification Email"
+                )}
               </Button>
             </div>
             <div className="flex justify-center mt-6">
@@ -171,7 +174,10 @@ export default function SignUp() {
   }
 
   return (
-    <div className="min-h-screen grid grid-cols-2 items-center bg-black w-full h-screen overflow-hidden">
+    <div className={`min-h-screen grid grid-cols-2 items-center ${theme === "dark"
+              ? "bg-[#040B11] text-white"
+              : "bg-[#EEEEEE] text-black"
+          } w-full h-screen overflow-hidden`}>
       <div className="signup-left hidden gap-3 px-5 justify-end overflow-hidden w-full md:flex">
         <div className={`flex flex-col gap-8 custom-card-1 `}>
           <CustomCard />
@@ -198,10 +204,15 @@ export default function SignUp() {
           <CustomCard />
         </div>
       </div>
-      <div className="flex justify-center items-center w-full">
-        <Card className="border-0 rounded-none bg-black w-full max-w-xl">
+      <div
+        className={` flex justify-center items-center w-full`}
+      >
+        <Card className={`border-0 rounded-none shadow-none w-full max-w-xl ${theme === "dark"
+              ? "bg-[#040B11] text-white"
+              : "bg-[#EEEEEE] text-black"
+          }`}>
           <CardHeader className="space-y-1">
-            <CardTitle className="text-[36px] font-bold text-center tracking-tight text-white">
+            <CardTitle className="text-[36px] font-bold text-center tracking-tight">
               SIGN UP
             </CardTitle>
             <CardDescription className="text-zinc-400 text-center text-[18px]">
@@ -209,11 +220,14 @@ export default function SignUp() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 font-[Quicksand]">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="space-y-5 font-[Quicksand]"
+            >
               <Input
                 type="text"
                 placeholder="Name"
-                className="bg-zinc-800 px-4 py-3 text-white placeholder:text-zinc-400 border-none rounded-none"
+                className={`${theme === "dark" ? "bg-zinc-800 text-white placeholder:text-zinc-400" : "bg-zinc-200 text-black placeholder:text-zinc-900"} px-4 py-3 border-none rounded-none`}
                 {...register("name", { required: "Name is required" })}
               />
               {errors.name && (
@@ -223,7 +237,7 @@ export default function SignUp() {
               <Input
                 type="email"
                 placeholder="Email"
-                className="bg-zinc-800 px-4 py-3 text-white placeholder:text-zinc-400 border-none rounded-none"
+                className={`${theme === "dark" ? "bg-zinc-800 text-white placeholder:text-zinc-400" : "bg-zinc-200 text-black placeholder:text-zinc-900"} px-4 py-3 border-none rounded-none`}
                 {...register("email", { required: "Email is required" })}
               />
               {errors.email && (
@@ -233,7 +247,7 @@ export default function SignUp() {
               <Input
                 type="password"
                 placeholder="Password"
-                className="bg-zinc-800 px-4 py-3 text-white placeholder:text-zinc-400 border-none rounded-none"
+                className={`${theme === "dark" ? "bg-zinc-800 text-white placeholder:text-zinc-400" : "bg-zinc-200 text-black placeholder:text-zinc-900"} px-4 py-3 border-none rounded-none`}
                 {...register("password", {
                   required: "Password is required",
                   minLength: 6,
@@ -247,24 +261,28 @@ export default function SignUp() {
 
               <Button
                 type="submit"
-                className="w-full bg-gradient-to-r from-enipp-purple1 to-enipp-purple2 border border-enipp-purple1 text-white rounded-none"
+                className="w-full flex items-center justify-center tf-button after:bg-black bg-gradient-to-r from-enipp-purple1 to-enipp-purple2 border border-enipp-purple1 text-white rounded-none"
                 disabled={loading}
               >
-                {loading ? <Loader2 className="animate-spin w-4 h-4" /> : "SIGN UP"}
+                {loading ? (
+                  <Loader2 className="animate-spin w-4 h-4" />
+                ) : (
+                  <div className="z-20">SIGN UP</div>
+                )}
               </Button>
             </form>
             <div className="relative my-4">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t bg-black"></div>
+              <div className="absolute inset-0 flex items-center z-10">
+                <div className={`w-full border-t ${theme === "dark" ? "border-white" : "border-zinc-900"}`}></div>
               </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-black px-2 text-zinc-400">
+              <div className="relative flex justify-center text-xs uppercase z-20">
+                <span className={`px-2 ${theme === "dark" ? "bg-[#040B11] text-zinc-400" : "bg-[#EEEEEE] text-zinc-900"}`}>
                   or continue with
                 </span>
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               <button
                 onClick={signInWithGoogle}
                 className="flex items-center justify-center gap-2 text-white bg-zinc-900 tf-button relative py-4"
@@ -284,7 +302,7 @@ export default function SignUp() {
                 </div>
                 <span className="z-20">Google</span>
               </button>
-              <button
+              {/* <button
                 variant="outline"
                 className="flex items-center justify-center gap-2 text-white bg-zinc-900 tf-button relative py-4"
               >
@@ -301,7 +319,7 @@ export default function SignUp() {
                   </svg>
                 </div>
                 <span className="z-20">Facebook</span>
-              </button>
+              </button> */}
             </div>
           </CardContent>
         </Card>
@@ -309,4 +327,3 @@ export default function SignUp() {
     </div>
   );
 }
-

@@ -33,12 +33,13 @@ export default function ResetPassword() {
   useEffect(() => {
     const checkSession = async () => {
       const { data } = await supabase.auth.getSession();
+      console.log(data);
       // If no recovery token in URL, redirect to login
-      if (!window.location.hash.includes("type=recovery")) {
-        navigate("/login");
-      }
+      // if (!window.location.hash.includes("type=recovery")) {
+      //   navigate("/login");
+      // }
     };
-    
+
     checkSession();
   }, [navigate]);
 
@@ -46,7 +47,7 @@ export default function ResetPassword() {
     setLoading(true);
     try {
       const { error } = await supabase.auth.updateUser({
-        password: data.password
+        password: data.password,
       });
 
       if (error) {
@@ -56,11 +57,8 @@ export default function ResetPassword() {
 
       toast.success("Password has been updated successfully");
       setResetComplete(true);
-      
-      // After a delay, redirect to login
-      setTimeout(() => {
-        navigate("/login");
-      }, 3000);
+
+      navigate("/login");
     } catch (error) {
       toast.error("Error: " + error.message);
     } finally {
@@ -77,8 +75,8 @@ export default function ResetPassword() {
               {resetComplete ? "Password Updated" : "Create New Password"}
             </CardTitle>
             <CardDescription className="text-zinc-400 text-center text-[18px]">
-              {resetComplete 
-                ? "Your password has been successfully reset" 
+              {resetComplete
+                ? "Your password has been successfully reset"
                 : "Enter a new secure password for your account"}
             </CardDescription>
           </CardHeader>
@@ -86,14 +84,19 @@ export default function ResetPassword() {
             {resetComplete ? (
               <div className="space-y-4">
                 <div className="bg-emerald-900/30 border border-emerald-700 p-6 rounded text-center">
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    className="h-16 w-16 mx-auto mb-4 text-emerald-400" 
-                    fill="none" 
-                    viewBox="0 0 24 24" 
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-16 w-16 mx-auto mb-4 text-emerald-400"
+                    fill="none"
+                    viewBox="0 0 24 24"
                     stroke="currentColor"
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
                   </svg>
                   <p className="text-white mb-4">
                     Your password has been updated successfully.
@@ -124,12 +127,15 @@ export default function ResetPassword() {
                       },
                       pattern: {
                         value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
-                        message: "Password must contain at least one uppercase letter, one lowercase letter, and one number",
+                        message:
+                          "Password must contain at least one uppercase letter, one lowercase letter, and one number",
                       },
                     })}
                   />
                   {errors.password && (
-                    <p className="text-red-500 text-sm">{errors.password.message}</p>
+                    <p className="text-red-500 text-sm">
+                      {errors.password.message}
+                    </p>
                   )}
                 </div>
 
@@ -140,16 +146,21 @@ export default function ResetPassword() {
                     className="bg-zinc-800 px-4 py-3 text-white placeholder:text-zinc-400 border-none rounded-none"
                     {...register("confirmPassword", {
                       required: "Please confirm your password",
-                      validate: value => value === password || "Passwords do not match",
+                      validate: (value) =>
+                        value === password || "Passwords do not match",
                     })}
                   />
                   {errors.confirmPassword && (
-                    <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>
+                    <p className="text-red-500 text-sm">
+                      {errors.confirmPassword.message}
+                    </p>
                   )}
                 </div>
 
                 <div className="bg-zinc-800/50 p-4 rounded border border-zinc-700">
-                  <p className="text-white text-sm mb-2">Password requirements:</p>
+                  <p className="text-white text-sm mb-2">
+                    Password requirements:
+                  </p>
                   <ul className="text-zinc-400 text-xs space-y-1 list-disc pl-4">
                     <li>Minimum 8 characters</li>
                     <li>At least one uppercase letter</li>
@@ -177,4 +188,4 @@ export default function ResetPassword() {
       <Footer />
     </>
   );
-} 
+}

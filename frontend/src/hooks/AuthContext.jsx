@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
       email: userData.email,
       token: token,
       emailVerified: userData.email_confirmed_at !== null,
-      displayName: userData.user_metadata?.name || userData.email.split('@')[0],
+      displayName: userData.user_metadata?.full_name || userData.user_metadata?.display_name || userData.email.split('@')[0],
     };
     
     setUser(userInfo);

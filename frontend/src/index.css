@@ -8,9 +8,23 @@
   src: url('/fonts/Quicksand.ttf');
 }
 
-body{
-  font-family:  'Quicksand';
+@font-face {
+  font-family: 'lexend';
+  src: url('/fonts/Lexend.ttf');
+}
+
+body {
+  font-family: 'lexend';
   margin: 0%;
   padding: 0%;
   box-sizing: border-box;
+}
+
+.comp-slogan {
+  word-spacing: 80%;
+  -webkit-transform: scale(1.5, 1) translate(85px, 0px);
+  -moz-transform: scale(1.5, 1) translate(85px, 0px);
+  -ms-transform: scale(1.5, 1) translate(85px, 0px);
+  -o-transform: scale(1.5, 1) translate(85px, 0px);
+  transform: scale(1.5, 1) translate(85px, 0px);
 }

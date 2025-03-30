@@ -15,6 +15,7 @@ import AuthHook from "@/hooks/AuthContext";
 import toast from "react-hot-toast";
 import supabase from "@/supabase/supabase";
 import { Loader2 } from "lucide-react";
+import useTheme from "@/hooks/ThemeContex";
 
 export default function Login() {
   const {
@@ -30,24 +31,25 @@ export default function Login() {
   const [resetPasswordLoading, setResetPasswordLoading] = useState(false);
   const [resetEmailSent, setResetEmailSent] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const { setUser, signInWithRemember } = AuthHook();
+  const { signInWithRemember } = AuthHook();
   const navigate = useNavigate();
+  const { theme } = useTheme();
 
   const signInWithGoogle = async () => {
     setLoading(true);
     try {
       const { data, error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
+        provider: "google",
         options: {
           redirectTo: window.location.origin,
-        }
+        },
       });
-      
+
       if (error) {
         toast.error("Google Sign-In Error: " + error.message);
         return;
       }
-      
+
       toast.success("Redirecting to Google sign in...");
     } catch (error) {
       toast.error("Google Sign-In Error: " + error.message);
@@ -61,10 +63,10 @@ export default function Login() {
       handleForgotPassword(data);
       return;
     }
-    
+
     setLoading(true);
     setUnconfirmedEmail(null);
-    
+
     try {
       const { data: authData, error } = await supabase.auth.signInWithPassword({
         email: data.email,
@@ -84,10 +86,10 @@ export default function Login() {
 
       // Get user metadata to get the name
       const { data: userData } = await supabase.auth.getUser();
-      
+
       // Use the new signInWithRemember function
       signInWithRemember(
-        userData.user, 
+        userData.user,
         authData.session.access_token,
         rememberMe
       );
@@ -105,26 +107,30 @@ export default function Login() {
     setResendLoading(true);
     try {
       const email = unconfirmedEmail || getValues("email");
-      
+
       if (!email) {
         toast.error("Please enter your email address");
         return;
       }
-      
+
       const { error } = await supabase.auth.resend({
-        type: 'signup',
+        type: "signup",
         email: email,
         options: {
-          emailRedirectTo: window.location.origin + '/email-confirmation',
-        }
+          emailRedirectTo: `${
+            import.meta.env.VITE_REDIRECT_URL
+          }/email-confirmation`,
+        },
       });
-      
+
       if (error) {
         toast.error("Error sending confirmation email: " + error.message);
         return;
       }
-      
-      toast.success("Confirmation email has been resent. Please check your inbox.");
+
+      toast.success(
+        "Confirmation email has been resent. Please check your inbox."
+      );
     } catch (error) {
       toast.error("Error: " + error.message);
     } finally {
@@ -140,16 +146,16 @@ export default function Login() {
         toast.error("Please enter your email address");
         return;
       }
-      
+
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: window.location.origin + '/reset-password',
+        redirectTo: `${import.meta.env.VITE_REDIRECT_URL}/reset-password`,
       });
-      
+
       if (error) {
         toast.error("Error sending password reset email: " + error.message);
         return;
       }
-      
+
       setResetEmailSent(true);
       toast.success("Password reset email sent. Please check your inbox.");
     } catch (error) {
@@ -161,7 +167,13 @@ export default function Login() {
 
   if (forgotPasswordMode) {
     return (
-      <div className="min-h-screen grid grid-cols-1 items-center bg-black w-full h-screen overflow-hidden md:grid-cols-2">
+      <div
+        className={`min-h-screen grid grid-cols-1 items-center ${
+          theme === "dark"
+            ? "bg-[#040B11] text-white"
+            : "bg-[#EEEEEE] text-black"
+        } w-full h-screen overflow-hidden md:grid-cols-2`}
+      >
         <div className="signup-left hidden gap-3 px-5 justify-end overflow-hidden w-full md:flex">
           <div className={`flex flex-col gap-8 custom-card-1 `}>
             <CustomCard />
@@ -189,51 +201,65 @@ export default function Login() {
           </div>
         </div>
         <div className="signup-right flex justify-center items-center w-full">
-          <Card className="border-0 rounded-none bg-black max-w-xl w-full">
+          <Card className={`border-0 rounded-none shadow-none ${theme === "dark" ? "bg-[#040B11] text-white" : "bg-[#EEEEEE] text-black"} max-w-xl w-full`}>
             <CardHeader className="space-y-1">
-              <CardTitle className="text-[36px] font-bold text-center tracking-tight text-white">
+              <CardTitle className="text-[36px] font-bold text-center tracking-tight">
                 Reset Password
               </CardTitle>
               <CardDescription className="text-zinc-400 text-center text-[18px]">
-                {resetEmailSent 
-                  ? "Reset email has been sent" 
+                {resetEmailSent
+                  ? "Reset email has been sent"
                   : "Enter your email to receive a password reset link"}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {resetEmailSent ? (
                 <div className="space-y-4">
-                  <div className="bg-emerald-900/30 border border-emerald-700 p-6 rounded text-center">
-                    <p className="text-white mb-4">
+                  <div className={`bg-emerald-900/30 border border-emerald-700 ${theme === "dark" ? "text-white" : "text-black"} p-6 rounded text-center`}>
+                    <p className="mb-4">
                       We've sent a password reset link to your email.
                     </p>
-                    <p className="text-zinc-400 mb-6">
-                      Please check your inbox and spam folder. The link will expire after 24 hours.
+                    <p className="mb-6">
+                      Please check your inbox and spam folder. The link will
+                      expire after 24 hours.
                     </p>
                   </div>
                   <Button
-                    className="w-full bg-zinc-800 hover:bg-zinc-700 text-white"
+                    className="w-full bg-zinc-800 hover:bg-zinc-700 text-white shadow-none rounded-none"
                     onClick={() => setForgotPasswordMode(false)}
                   >
                     Back to Login
                   </Button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 font-[Quicksand] font-semibold">
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  className="space-y-5 font-[Quicksand] font-semibold"
+                >
                   <Input
                     type="email"
                     placeholder="Email"
-                    className="bg-zinc-800 px-4 py-3 text-white placeholder:text-zinc-400 border-none rounded-none"
+                    className={`${
+                      theme === "dark"
+                        ? "bg-zinc-800 text-white placeholder:text-zinc-400"
+                        : "bg-zinc-200 text-black placeholder:text-zinc-900"
+                    } px-4 py-3 border-none rounded-none`}
                     {...register("email", { required: "Email is required" })}
                   />
                   {errors.email && (
-                    <p className="text-red-500 text-sm">{errors.email.message}</p>
+                    <p className="text-red-500 text-sm">
+                      {errors.email.message}
+                    </p>
                   )}
 
                   <div className="grid grid-cols-2 gap-4 pt-2">
                     <Button
                       type="button"
-                      className="bg-zinc-800 hover:bg-zinc-700 text-white rounded-none tf-button after:!bg-gradient-to-r after:from-enipp-purple1 after:to-enipp-purple2"
+                      className={`${
+                        theme === "dark"
+                          ? "bg-zinc-800 hover:bg-zinc-700 text-white"
+                          : "bg-zinc-200 hover:bg-zinc-300 text-black"
+                      } rounded-none shadow-none tf-button after:!bg-gradient-to-r after:from-enipp-purple1 after:to-enipp-purple2`}
                       onClick={() => setForgotPasswordMode(false)}
                     >
                       <div className="z-20">Back to Login</div>
@@ -243,7 +269,11 @@ export default function Login() {
                       className="bg-gradient-to-r from-enipp-purple1 to-enipp-purple2 border border-enipp-purple1 text-white rounded-none tf-button after:!bg-black"
                       disabled={resetPasswordLoading}
                     >
-                      {resetPasswordLoading ? <Loader2 className="animate-spin w-4 h-4"/> : <div className="z-20">Send Reset Link</div>}
+                      {resetPasswordLoading ? (
+                        <Loader2 className="animate-spin w-4 h-4" />
+                      ) : (
+                        <div className="z-20">Send Reset Link</div>
+                      )}
                     </Button>
                   </div>
                 </form>
@@ -256,7 +286,11 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen grid grid-cols-1 items-center bg-black w-full h-screen overflow-hidden md:grid-cols-2">
+    <div
+      className={`min-h-screen grid grid-cols-1 items-center ${
+        theme === "dark" ? "bg-[#040B11] text-white" : "bg-[#EEEEEE] text-black"
+      } w-full h-screen overflow-hidden md:grid-cols-2`}
+    >
       <div className="signup-left hidden gap-3 px-5 justify-end overflow-hidden w-full md:flex">
         <div className={`flex flex-col gap-8 custom-card-1 `}>
           <CustomCard />
@@ -284,9 +318,15 @@ export default function Login() {
         </div>
       </div>
       <div className="signup-right flex justify-center items-center w-full">
-        <Card className="border-0 rounded-none bg-black max-w-xl w-full">
+        <Card
+          className={`border-0 rounded-none shadow-none ${
+            theme === "dark"
+              ? "bg-[#040B11] text-white"
+              : "bg-[#EEEEEE] text-black"
+          } max-w-xl w-full`}
+        >
           <CardHeader className="space-y-1">
-            <CardTitle className="text-[36px] font-bold text-center tracking-tight text-white">
+            <CardTitle className="text-[36px] font-bold text-center tracking-tight">
               SIGN IN
             </CardTitle>
             <CardDescription className="text-zinc-400 text-center text-[18px]">
@@ -294,11 +334,18 @@ export default function Login() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 font-[Quicksand] font-semibold">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="space-y-5 font-[Quicksand] font-semibold"
+            >
               <Input
                 type="email"
                 placeholder="Email"
-                className="bg-zinc-800 px-4 py-3 text-white placeholder:text-zinc-400 border-none rounded-none"
+                className={`${
+                  theme === "dark"
+                    ? "bg-zinc-800 text-white placeholder:text-zinc-400"
+                    : "bg-zinc-200 text-black placeholder:text-zinc-900"
+                } px-4 py-3 border-none rounded-none`}
                 {...register("email", { required: "Email is required" })}
               />
               {errors.email && (
@@ -308,7 +355,11 @@ export default function Login() {
               <Input
                 type="password"
                 placeholder="Password"
-                className="bg-zinc-800 px-4 py-3 text-white placeholder:text-zinc-400 border-none rounded-none"
+                className={`${
+                  theme === "dark"
+                    ? "bg-zinc-800 text-white placeholder:text-zinc-400"
+                    : "bg-zinc-200 text-black placeholder:text-zinc-900"
+                } px-4 py-3 border-none rounded-none`}
                 {...register("password", {
                   required: "Password is required",
                   minLength: {
@@ -326,7 +377,8 @@ export default function Login() {
               {unconfirmedEmail && (
                 <div className="bg-amber-900/30 border border-amber-700 p-3 rounded">
                   <p className="text-amber-300 text-sm mb-2">
-                    Your email ({unconfirmedEmail}) needs to be verified before signing in.
+                    Your email ({unconfirmedEmail}) needs to be verified before
+                    signing in.
                   </p>
                   <Button
                     type="button"
@@ -334,7 +386,11 @@ export default function Login() {
                     onClick={handleResendConfirmation}
                     disabled={resendLoading}
                   >
-                    {resendLoading ? <Loader2 className="animate-spin w-4 h-4"/> : <div className="z-20">Resend Confirmation Email</div>}
+                    {resendLoading ? (
+                      <Loader2 className="animate-spin w-4 h-4" />
+                    ) : (
+                      <div className="z-20">Resend Confirmation Email</div>
+                    )}
                   </Button>
                 </div>
               )}
@@ -347,8 +403,17 @@ export default function Login() {
                     checked={rememberMe}
                     onChange={() => setRememberMe(!rememberMe)}
                   />
-                  <span className="text-white">Remember me</span>
+                  <span className="">Remember me</span>
                 </label>
+
+                <button
+                  type="button"
+                  onClick={() => navigate("/signup")}
+                  className="text-enipp-purple1 hover:underline"
+                >
+                  Signup
+                </button>
+
                 <button
                   type="button"
                   onClick={() => setForgotPasswordMode(true)}
@@ -363,20 +428,36 @@ export default function Login() {
                 className="w-full flex justify-center items-center bg-gradient-to-r from-enipp-purple1 to-enipp-purple2 border border-enipp-purple1 text-white tf-button after:!bg-black rounded-none "
                 disabled={loading}
               >
-                {loading ? <Loader2 className="animate-spin w-4 h-4"/> : <div className="z-20">SIGN IN</div>}
+                {loading ? (
+                  <Loader2 className="animate-spin w-4 h-4" />
+                ) : (
+                  <div className="z-20">SIGN IN</div>
+                )}
               </Button>
             </form>
 
             <div className="relative my-4">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t bg-black"></div>
+                <div
+                  className={`w-full border-t ${
+                    theme === "dark" ? "border-white" : "border-zinc-900"
+                  }`}
+                ></div>
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-black px-2 text-zinc-400">or</span>
+                <span
+                  className={`px-2 ${
+                    theme === "dark"
+                      ? "bg-[#040B11] text-zinc-400"
+                      : "bg-[#EEEEEE] text-zinc-900"
+                  }`}
+                >
+                  or
+                </span>
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               <button
                 onClick={signInWithGoogle}
                 className="flex items-center justify-center gap-2 text-white bg-zinc-900 tf-button relative py-4"
@@ -396,7 +477,7 @@ export default function Login() {
                 </div>
                 <span className="z-20">Google</span>
               </button>
-              <button
+              {/* <button
                 variant="outline"
                 className="flex items-center justify-center gap-2 text-white bg-zinc-900 tf-button relative py-4"
               >
@@ -413,7 +494,7 @@ export default function Login() {
                   </svg>
                 </div>
                 <span className="z-20">Facebook</span>
-              </button>
+              </button> */}
             </div>
           </CardContent>
         </Card>

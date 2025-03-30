@@ -14,6 +14,7 @@ const Model = () => {
         <OrbitControls 
           minDistance={6.5}
           maxDistance={100}
+          enableZoom={false}
         />
         <Model1 />
       </Canvas>

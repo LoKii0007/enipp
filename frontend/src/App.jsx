@@ -14,8 +14,8 @@ import ContactUs from "./screens/ContactUs";
 import Roadmap from "./screens/Roadmap";
 import Team from "./screens/Team";
 import About from "./screens/About";
-import './css/home.css'
-import './index.css'
+import "./css/home.css";
+import "./index.css";
 import { useEffect, useState } from "react";
 import AuthHook from "./hooks/AuthContext";
 import { Loader2 } from "lucide-react";
@@ -40,19 +40,19 @@ function AppContent() {
   const location = useLocation();
   const [showNavbar, setShowNavbar] = useState(true);
   const { isLoading } = AuthHook();
-  
+
   useEffect(() => {
     // Hide Navbar on EmailConfirmation and ResetPassword pages
     setShowNavbar(
-      !location.pathname.includes('/email-confirmation') && 
-      !location.pathname.includes('/reset-password')
+      !location.pathname.includes("/email-confirmation") &&
+        !location.pathname.includes("/reset-password")
     );
   }, [location]);
-  
+
   if (isLoading) {
     return <LoadingScreen />;
   }
-  
+
   return (
     <>
       {showNavbar && <Navbar />}
@@ -77,12 +77,12 @@ function AppContent() {
 function App() {
   return (
     <>
-      <AuthProvider>
-        <ThemeProvider>
+      <ThemeProvider>
+        <AuthProvider>
           <AppContent />
-          <Toaster />
-        </ThemeProvider>
-      </AuthProvider>
+        </AuthProvider>
+        <Toaster />
+      </ThemeProvider>
     </>
   );
 }

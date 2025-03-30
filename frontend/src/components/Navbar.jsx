@@ -28,53 +28,10 @@ const Navbar = () => {
   const { theme, setTheme } = useTheme();
   const [navBottom, setNavBottom] = useState(false);
   const navigate = useNavigate();
-  const { user, userLoggedIn, signOut, isEmailVerified, checkEmailVerification } = AuthHook();
-  const [showVerificationBanner, setShowVerificationBanner] = useState(false);
-  const [resendLoading, setResendLoading] = useState(false);
+  const { user, userLoggedIn, signOut } = AuthHook();
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [showSignOutDialog, setShowSignOutDialog] = useState(false);
-  const [showUserMenu, setShowUserMenu] = useState(false);
 
-  useEffect(() => {
-    if (userLoggedIn && !isEmailVerified) {
-      setShowVerificationBanner(true);
-    } else {
-      setShowVerificationBanner(false);
-    }
-  }, [userLoggedIn, isEmailVerified]);
-
-  useEffect(() => {
-    // Check email verification status when user logs in
-    if (userLoggedIn) {
-      checkEmailVerification();
-    }
-  }, [userLoggedIn]);
-
-  const handleResendVerification = async () => {
-    if (!user?.email) return;
-    
-    setResendLoading(true);
-    try {
-      const { error } = await supabase.auth.resend({
-        type: 'signup',
-        email: user.email,
-        options: {
-          emailRedirectTo: window.location.origin + '/email-confirmation',
-        }
-      });
-      
-      if (error) {
-        toast.error("Error sending verification email: " + error.message);
-        return;
-      }
-      
-      toast.success("Verification email has been resent. Please check your inbox.");
-    } catch (error) {
-      toast.error("Error: " + error.message);
-    } finally {
-      setResendLoading(false);
-    }
-  };
 
   const handleSignOut = async () => {
     setIsSigningOut(true);
@@ -104,38 +61,6 @@ const Navbar = () => {
 
   return (
     <>
-      {showVerificationBanner && (
-        <div className={`w-full py-2 px-4 text-center ${theme === "dark" ? "bg-zinc-900 text-white" : "bg-white text-zinc-900"}`}>
-          <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
-            <p className="text-white mb-2 md:mb-0">
-              Please verify your email address to access all features.
-            </p>
-            <div className="flex gap-2">
-              <button
-                onClick={handleResendVerification}
-                disabled={resendLoading}
-                className={`px-3 py-1 text-sm font-medium rounded-md ${
-                  theme === "dark" 
-                    ? "bg-enipp-purple1 hover:bg-enipp-purple2" 
-                    : "bg-enipp-purple1 hover:bg-enipp-purple2"
-                } text-white`}
-              >
-                {resendLoading ? "Sending..." : "Resend Verification"}
-              </button>
-              <button
-                onClick={() => setShowVerificationBanner(false)}
-                className={`px-3 py-1 text-sm font-medium rounded-md ${
-                  theme === "dark" 
-                    ? "bg-transparent border border-amber-700" 
-                    : "bg-transparent border border-amber-500"
-                } text-white`}
-              >
-                Dismiss
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
       
       {/* Sign Out Confirmation Dialog */}
       <Dialog open={showSignOutDialog} onOpenChange={setShowSignOutDialog}>
@@ -181,6 +106,7 @@ const Navbar = () => {
         </DialogContent>
       </Dialog>
       
+      {/* Desktop Navbar */}
       <nav
         className={`sticky hidden md:flex top-0 left-0 py-3 px-8 ${
           theme === "dark"
@@ -250,6 +176,8 @@ const Navbar = () => {
           </div>
         )}
       </nav>
+
+      {/* Mobile Navbar */}
       <nav
         className={`flex sticky top-0 z-50 flex-col px-5 py-4 ${
           theme === "dark"
