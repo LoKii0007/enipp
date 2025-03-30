@@ -31,26 +31,26 @@ const Footer = () => {
         <div className="footer-top grid grid-cols-1 gap-12 justify-center items-center md:grid-cols-3">
           <div className="flex flex-col gap-4">
             <div className="flex gap-3 text-2xl">
-              <img className="w-5 h-5"  src="/images/enipp-logo.png" alt="" />
+              <img className="w-7 h-7"  src="/images/enipp-logo.png" alt="" />
               ENIPP
             </div>
             <p className="text-left font-[quicksand]">
-            Enipp is perfect way to bring your art to life
+            Enipp is the perfect way to break the shackles of reality
             </p>
             <p className="text-left font-[quicksand]">
-            Address: D-52 kalkaji, 110019, New Delhi, India 
+            Address: D-52 kalkaji, New Delhi, India, 110019
             </p>
             <p className="text-left font-[quicksand]">
-            email: Info@enipp.com <br /> Phone: +91-991000515
+            Email: Admin@enipp.com <br /> Phone: +91-99711 75159
             </p>
           </div>
           <div className="grid grid-cols-2 items-center">
             <div className="flex flex-col gap-3">
               <div className="py-2">Services</div>
               <Link className="capitalize py-2 text-[#c3c3c5]">No code Editor</Link>
-              <Link className="capitalize py-2 text-[#c3c3c5]">Custom Orders</Link>
-              <Link className="capitalize py-2 text-[#c3c3c5]">Customization</Link>
-              <Link className="capitalize py-2 text-[#c3c3c5]">Order Now</Link>
+              <Link className="capitalize py-2 text-[#c3c3c5]">Custom Requests</Link>
+              <Link className="capitalize py-2 text-[#c3c3c5]">Collaborations</Link>
+              <Link className="capitalize py-2 text-[#c3c3c5]">Shop(coming soon)</Link>
             </div>
             <div className="flex flex-col gap-3 text-left">
               <div className="py-2">Links</div>

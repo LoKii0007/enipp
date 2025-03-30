@@ -42,7 +42,7 @@ const Home = () => {
           <div className="hero-left flex flex-col h-full gap-5 items-center justify-center">
             <div className="uppercase hidden break-words  tracking-widest text-left w-full md:block md:text-[80px] md:leading-[120%]">
               with <span className="text-enipp-purple1">ENIPP</span> <br />{" "}
-              create ar/vr <br /> experiences
+              Express Beyond <br /> Reality
             </div>
             <div className="uppercase text-[40px] break-words  tracking-widest text-left w-full md:hidden">
               with <br /> <span className="text-enipp-purple1">ENIPP</span>{" "}
@@ -50,8 +50,7 @@ const Home = () => {
               ar/vr <br /> experiences
             </div>
             <div className="text-left w-full">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat,
-              cumque!
+            Create,Customize & Share Your 3D Experiences with Ease! 
             </div>
             <div className="mt-10 w-full flex justify-start gap-8 ">
               <button className="bg-gradient-to-r from-enipp-purple1 to-enipp-purple2 border border-enipp-purple1 text-[#141B22] px-8 py-3 tf-button after:!bg-[#787878] flex justify-center items-center ">
