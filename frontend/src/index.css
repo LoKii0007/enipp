@@ -13,8 +13,13 @@
   src: url('/fonts/Lexend.ttf');
 }
 
+@font-face {
+  font-family: 'glametrix';
+  src: url('/fonts/Glametrix.otf');
+}
+
 body {
-  font-family: 'lexend';
+  font-family: 'glametrix';
   margin: 0%;
   padding: 0%;
   box-sizing: border-box;
@@ -27,10 +32,4 @@ body {
   -ms-transform: scale(1.5, 1) translate(85px, 0px);
   -o-transform: scale(1.5, 1) translate(85px, 0px);
   transform: scale(1.5, 1) translate(85px, 0px);
-}
-
-.gradient-1 {
-  background-color: #040B11;
-  border-radius: 10px;
-  border: 0.2px solid #ffffff50;
 }

@@ -29,7 +29,7 @@ export default function SignUp() {
   const [resendLoading, setResendLoading] = useState(false);
   const { setUser } = AuthHook();
   const navigate = useNavigate();
-  const { theme } = useTheme()
+  const { theme } = useTheme();
 
   const signInWithGoogle = async () => {
     setLoading(true);
@@ -174,11 +174,14 @@ export default function SignUp() {
   }
 
   return (
-    <div className={`min-h-screen grid grid-cols-2 items-center ${theme === "dark"
-              ? "bg-[#040B11] text-white"
-              : "bg-[#EEEEEE] text-black"
-          } w-full h-screen overflow-hidden`}>
-      <div className="signup-left hidden gap-3 px-5 justify-end overflow-hidden w-full md:flex">
+    <div
+      className={`min-h-screen grid grid-cols-1 items-center ${
+        theme === "dark"
+          ? "bg-enipp-dark1 text-white"
+          : "bg-[#EEEEEE] text-black"
+      } w-full h-screen overflow-hidden`}
+    >
+      {/* <div className="signup-left hidden gap-3 px-5 justify-end overflow-hidden w-full md:flex">
         <div className={`flex flex-col gap-8 custom-card-1 `}>
           <CustomCard />
           <CustomCard />
@@ -203,14 +206,15 @@ export default function SignUp() {
           <CustomCard />
           <CustomCard />
         </div>
-      </div>
-      <div
-        className={` flex justify-center items-center w-full`}
-      >
-        <Card className={`border-0 rounded-md shadow-none w-full max-w-xl ${theme === "dark"
-              ? "bg-[#040B11] text-white"
+      </div> */}
+      <div className={` flex justify-center items-center w-full`}>
+        <Card
+          className={`border-0 rounded-md shadow-none w-full max-w-xl ${
+            theme === "dark"
+              ? "bg-enipp-dark1 text-white"
               : "bg-[#EEEEEE] text-black"
-          }`}>
+          }`}
+        >
           <CardHeader className="space-y-1">
             <CardTitle className="text-[36px] font-bold text-center tracking-tight">
               SIGN UP
@@ -227,7 +231,11 @@ export default function SignUp() {
               <Input
                 type="text"
                 placeholder="Name"
-                className={`${theme === "dark" ? "bg-zinc-800 text-white placeholder:text-zinc-400" : "bg-zinc-200 text-black placeholder:text-zinc-900"} px-4 py-3 border-none rounded-md shadow-md`}
+                className={`${
+                  theme === "dark"
+                    ? "bg-zinc-800 text-white placeholder:text-zinc-400"
+                    : "bg-zinc-200 text-black placeholder:text-zinc-900"
+                } px-4 py-3 border-none rounded-md shadow-md`}
                 {...register("name", { required: "Name is required" })}
               />
               {errors.name && (
@@ -237,7 +245,11 @@ export default function SignUp() {
               <Input
                 type="email"
                 placeholder="Email"
-                className={`${theme === "dark" ? "bg-zinc-800 text-white placeholder:text-zinc-400" : "bg-zinc-200 text-black placeholder:text-zinc-900"} px-4 py-3 border-none rounded-md shadow-md`}
+                className={`${
+                  theme === "dark"
+                    ? "bg-zinc-800 text-white placeholder:text-zinc-400"
+                    : "bg-zinc-200 text-black placeholder:text-zinc-900"
+                } px-4 py-3 border-none rounded-md shadow-md`}
                 {...register("email", { required: "Email is required" })}
               />
               {errors.email && (
@@ -247,7 +259,11 @@ export default function SignUp() {
               <Input
                 type="password"
                 placeholder="Password"
-                className={`${theme === "dark" ? "bg-zinc-800 text-white placeholder:text-zinc-400" : "bg-zinc-200 text-black placeholder:text-zinc-900"} px-4 py-3 border-none rounded-md shadow-md`}
+                className={`${
+                  theme === "dark"
+                    ? "bg-zinc-800 text-white placeholder:text-zinc-400"
+                    : "bg-zinc-200 text-black placeholder:text-zinc-900"
+                } px-4 py-3 border-none rounded-md shadow-md`}
                 {...register("password", {
                   required: "Password is required",
                   minLength: 6,
@@ -273,10 +289,20 @@ export default function SignUp() {
             </form>
             <div className="relative my-4">
               <div className="absolute inset-0 flex items-center z-10">
-                <div className={`w-full border-t ${theme === "dark" ? "border-white" : "border-zinc-900"}`}></div>
+                <div
+                  className={`w-full border-t ${
+                    theme === "dark" ? "border-white" : "border-zinc-900"
+                  }`}
+                ></div>
               </div>
               <div className="relative flex justify-center text-xs uppercase z-20">
-                <span className={`px-2 ${theme === "dark" ? "bg-[#040B11] text-zinc-400" : "bg-[#EEEEEE] text-zinc-900"}`}>
+                <span
+                  className={`px-2 ${
+                    theme === "dark"
+                      ? "bg-enipp-dark1 text-zinc-400"
+                      : "bg-[#EEEEEE] text-zinc-900"
+                  }`}
+                >
                   or continue with
                 </span>
               </div>

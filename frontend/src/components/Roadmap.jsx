@@ -9,7 +9,7 @@ const Roadmap = ({ theme }) => {
       <div
         className={`roadmap px-5 md:px-[15%] w-full flex flex-col gap-5 md:gap-0 items-center justify-center relative`}
       >
-        <div className="rd-line absolute w-1 bg-enipp-purple1 h-[calc(100%-177px)] hidden md:block"></div>
+        <div className="rd-line absolute w-1 bg-enipp-purple1 h-full hidden md:block"></div>
 
         {roadmap.map((item, index) => (
           <div

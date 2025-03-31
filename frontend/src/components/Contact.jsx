@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import supabase from "@/supabase/supabase";
 import useTheme from "@/hooks/ThemeContex";
 import toast from "react-hot-toast";
@@ -15,6 +15,7 @@ const ContactForm = () => {
   });
   const [loading, setLoading] = useState(false);
   const { theme } = useTheme();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,33 +26,50 @@ const ContactForm = () => {
     setLoading(true);
     try {
       const { data, error } = await supabase
-        .from('contacts')
+        .from("contacts")
         .insert([formData]);
-        
+
       if (error) throw error;
-      
+
       toast.success("Message sent successfully.");
       setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (error) {
       console.error("Error submitting form:", error);
-      toast.error('An error occurred. Please try again later.');
+      toast.error("An error occurred. Please try again later.");
     }
     setLoading(false);
   };
 
+  useEffect(() => {
+    const responsive = () => {
+      if (window.innerWidth < 768) {
+        setIsMobile(true);
+      } else {
+        setIsMobile(false);
+      }
+    };
+
+    window.addEventListener("resize", responsive);
+    return () => {
+      window.removeEventListener("resize", responsive);
+    };
+  }, [window.innerWidth]);
+
   return (
     <div
       className={` ${
-        theme === "dark" ? "bg-[#040B11] text-white" : "bg-[#ffffff] text-black"
-      }  p-10 flex flex-col items-center `}
+        theme === "dark"
+          ? "bg-enipp-dark1 text-white"
+          : "bg-[#ffffff] text-black"
+      }  p-5 md:p-10 flex flex-col items-center `}
     >
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl">
         <div className="border border-gray-700 p-6 text-center flex flex-col gap-5">
           <span className="text-enipp-purple1 flex justify-center items-center text-3xl">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="50"
-              height="50"
+              width={isMobile ? "30" : "50"}
+              height={isMobile ? "30" : "50"}
               fill="currentColor"
               class="bi bi-geo-alt-fill"
               viewBox="0 0 16 16"
@@ -66,8 +84,8 @@ const ContactForm = () => {
           <span className="text-enipp-purple1 flex justify-center items-center text-3xl">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="50"
-              height="50"
+              width={isMobile ? "30" : "50"}
+              height={isMobile ? "30" : "50"}
               fill="currentColor"
               class="bi bi-envelope-open"
               viewBox="0 0 16 16"
@@ -82,8 +100,8 @@ const ContactForm = () => {
           <span className="text-enipp-purple1 flex justify-center items-center text-3xl">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="50"
-              height="50"
+              width={isMobile ? "30" : "50"}
+              height={isMobile ? "30" : "50"}
               fill="currentColor"
               class="bi bi-telephone-fill"
               viewBox="0 0 16 16"
@@ -99,10 +117,7 @@ const ContactForm = () => {
         </div>
       </div>
 
-      <h2 className="text-2xl font-bold mt-10">Get In Touch</h2>
-      <p className="text-gray-400 mb-6">
-        Browse through the most frequently asked questions
-      </p>
+      <h2 className="text-2xl font-bold my-10">Get In Touch</h2>
 
       <form onSubmit={handleSubmit} className="w-full max-w-lg">
         <div className="flex gap-4">
@@ -112,7 +127,7 @@ const ContactForm = () => {
             placeholder="Name"
             value={formData.name}
             onChange={handleChange}
-            className="w-1/2 p-3 bg-[#C2C3C526] border border-gray-600 "
+            className="w-1/2 p-3 bg-[#C2C3C526] border border-gray-600 rounded-md shadow-md"
             required
           />
           <input
@@ -121,7 +136,7 @@ const ContactForm = () => {
             placeholder="Enter your email"
             value={formData.email}
             onChange={handleChange}
-            className="w-1/2 p-3 bg-[#C2C3C526] border border-gray-600 font-sans "
+            className="w-1/2 p-3 bg-[#C2C3C526] border border-gray-600 rounded-md shadow-md"
             required
           />
         </div>
@@ -131,7 +146,7 @@ const ContactForm = () => {
           placeholder="Subject"
           value={formData.subject}
           onChange={handleChange}
-          className="w-full p-3 mt-4 bg-[#C2C3C526] border border-gray-600 font-sans"
+          className="w-full p-3 mt-4 bg-[#C2C3C526] border border-gray-600 rounded-md shadow-md"
           required
         />
         <textarea
@@ -139,36 +154,34 @@ const ContactForm = () => {
           placeholder="Message"
           value={formData.message}
           onChange={handleChange}
-          className="w-full p-3 mt-4 bg-[#C2C3C526] border border-gray-600 h-32 font-sans"
+          className="w-full p-3 mt-4 bg-[#C2C3C526] border border-gray-600 h-32 rounded-md shadow-md"
           required
         ></textarea>
-        <div className="w-full grid grid-cols-2 gap-12 justify-center items-center mt-5">
+        <div className="w-full grid grid-cols-2 gap-5 md:gap-12 justify-center items-center mt-5">
           <button
             type="submit"
             className={`flex items-center justify-center gap-2 border-enipp-purple1 after:bg-gradient-to-r after:from-enipp-purple1 after:to-enipp-purple2 border  ${
-              theme === "dark"
-                ? " text-white"
-                : " text-black"
-            } tf-button relative p-4 px-10`}
+              theme === "dark" ? " text-white" : " text-black"
+            } tf-button relative p-4`}
             disabled={loading}
           >
             <div className="z-20"></div>
             <span className="z-20">
-              {loading ? <Loader2 className="animate-spin w-5 h-5" /> : "Send Message"}
+              {loading ? (
+                <Loader2 className="animate-spin w-5 h-5" />
+              ) : (
+                "Send Message"
+              )}
             </span>
           </button>
           <Link
             to={companyInfo.social.calendar}
             target="_blank"
             className={`flex items-center justify-center gap-2 border-enipp-purple1 after:bg-gradient-to-r after:from-enipp-purple1 after:to-enipp-purple2 border  ${
-              theme === "dark"
-                ? " text-white"
-                : " text-black"
-            } tf-button relative p-4 px-10`}
+              theme === "dark" ? " text-white" : " text-black"
+            } tf-button relative p-4`}
           >
-            <span className="z-20">
-              Schedule a Call
-            </span>
+            <span className="z-20">Schedule a Call</span>
           </Link>
         </div>
       </form>

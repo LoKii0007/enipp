@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import useTheme from "@/hooks/ThemeContex";
+import { companyInfo } from "@/utils/constants";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
@@ -39,63 +40,66 @@ const Footer = () => {
             : "bg-[#ffffff] text-black"
         } w-full px-5 pt-12 flex flex-col gap-6 md:px-12 xl:px-[15%] `}
       >
-        <div className="footer-top grid grid-cols-1 gap-12 justify-center items-center md:grid-cols-3">
-          <div className="flex flex-col gap-4">
-            <div className="flex gap-3 text-2xl">
-              <img className="w-7 h-7" src="/images/enipp-logo.png" alt="" />
+        <div className="footer-top grid grid-cols-1 gap-12 justify-center items-center md:grid-cols-2">
+          <div className="flex flex-col gap-4 ">
+            <div className="flex gap-3 md:text-5xl items-center font-extrabold">
+              <img className="w-10 h-10" src="/images/enipp-logo.png" alt="" />
               ENIPP
             </div>
-            <p className="text-left font-[quicksand]">
+            <p className="text-left md:text-xl ">
               Enipp is the perfect way to break the shackles of reality
             </p>
-            <p className="text-left font-[quicksand]">
-              Address: D-52 kalkaji, New Delhi, India, 110019
+            <p className="text-left md:text-xl">
+              Address: {companyInfo.address}
             </p>
-            <p className="text-left font-[quicksand]">
-              Email: Admin@enipp.com <br /> Phone: +91-99711 75159
+            <p className="text-left md:text-xl">
+              Email: {companyInfo.email} <br /> Phone: {companyInfo.phone}
             </p>
           </div>
-          <div className="grid grid-cols-2 items-center">
-            <div className="flex flex-col gap-3">
-              <div className="py-2">Services</div>
+          <div className="grid grid-cols-2 items-center h-full">
+            <div className="flex flex-col gap-3 h-full">
+              <div className=" md:text-3xl">Services</div>
               <Link
-                to="/no-code-editor"
-                className="capitalize py-2 text-[#c3c3c5]"
+                onClick={()=> toast("Coming Soon", {
+                  color: "green",
+                })}
+                // to="/no-code-editor"
+                className="capitalize text-[#c3c3c5] opacity-70"
               >
                 No code Editor
               </Link>
-              <Link to="/contact" className="capitalize py-2 text-[#c3c3c5]">
+              <Link to="/contact" className="capitalize text-[#c3c3c5] opacity-70">
                 Custom Requests
               </Link>
               <Link
                 to="https://mail.google.com/mail/u/0/?view=cm&fs=1&to=admin@enipp.com"
                 rel="noopener noreferrer"
                 target="_blank"
-                className="capitalize py-2 text-[#c3c3c5]"
+                className="capitalize text-[#c3c3c5] opacity-70"
               >
                 Collaborations
               </Link>
-              <Link to="/shop" className="capitalize py-2 text-[#c3c3c5]">
+              <Link to="/shop" className="capitalize text-[#c3c3c5] opacity-70">
                 Shop(coming soon)
               </Link>
             </div>
-            <div className="flex flex-col gap-3 text-left">
-              <div className="py-2">Links</div>
-              <Link to="/privacy" className="capitalize py-2 text-[#c3c3c5]">
+            <div className="flex flex-col gap-3 text-left h-full">
+              <div className=" md:text-3xl">Links</div>
+              <Link to="/privacy-policy" className="capitalize text-[#c3c3c5] opacity-70">
                 Privacy Policy
               </Link>
-              <Link to="/terms" className="capitalize py-2 text-[#c3c3c5]">
+              <Link to="/terms" className="capitalize text-[#c3c3c5] opacity-70">
                 Terms of Service
               </Link>
-              <Link to="/contact" className="capitalize py-2 text-[#c3c3c5]">
+              <Link to="/contact" className="capitalize text-[#c3c3c5] opacity-70">
                 Contact Us
               </Link>
-              <Link to="/careers" className="capitalize py-2 text-[#c3c3c5]">
+              {/* <Link to="/careers" className="capitalize py-2 text-[#c3c3c5]">
                 Careers
-              </Link>
+              </Link> */}
             </div>
           </div>
-          <form
+          {/* <form
             className="flex w-full justify-center items-center"
             onSubmit={handleSignup}
           >
@@ -107,7 +111,7 @@ const Footer = () => {
               required
               className={`${
                 theme === "dark"
-                  ? "bg-[#040B11] text-white"
+                  ? "bg-enipp-dark1 text-white"
                   : "bg-[#EEEEEE] text-black"
               } p-3 w-full border-none rounded-md shadow-md focus:ring-0 focus:outline-none md:w-2/3`}
             />
@@ -120,12 +124,12 @@ const Footer = () => {
                 {loading ? <Loader2 className=" animate-spin" /> : "SIGNUP"}
               </div>
             </button>
-          </form>
+          </form> */}
         </div>
         <div className="border-b border-zinc-700 mt-3 "></div>
         <div className="footer-bottom flex flex-col justify-center items-center pb-4 md:flex-row md:justify-between gap-4 ">
           <div>
-            ENIPP - <span className="font-sans">2025</span> All rights reserved
+            ENIPP - 2025 All rights reserved
           </div>
           <div className="flex gap-5">
             <Link

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const TeamCard = ({ theme, item }) => {
 
@@ -6,8 +7,10 @@ const TeamCard = ({ theme, item }) => {
   }, [theme]);
   return (
     <>
-      <div
-        className={`team-card relative custom-card flex flex-col items-center justify-center gap-4 py-8 ${
+      <Link
+        to={item.social.linkedin}
+        target="_blank"
+        className={`team-card relative custom-card flex flex-col items-center justify-center gap-4 md:gap-6 p-5 md:p-8${
           theme === "dark"
             ? "bg-[#141B22] text-white gradient-1"
             : "bg-[#ffffff] text-black"
@@ -19,11 +22,11 @@ const TeamCard = ({ theme, item }) => {
           alt=""
         />
         <div className="flex flex-col items-center justify-center gap-1 z-20">
-          <div className="name text-xl font-bold">{item.name}</div>
-          <div className="post text-xl ">{item.title}</div>
+          <div className="name text-lg md:text-2xl font-bold">{item.name}</div>
+          <div className="post md:text-lg opacity-80">{item.title}</div>
         </div>
         <div className="glow-1 z-10 top-[80px]"></div>
-      </div>
+      </Link>
     </>
   );
 };

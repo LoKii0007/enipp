@@ -170,11 +170,11 @@ export default function Login() {
       <div
         className={`min-h-screen grid grid-cols-1 items-center ${
           theme === "dark"
-            ? "bg-[#040B11] text-white"
+            ? "bg-enipp-dark1 text-white"
             : "bg-[#EEEEEE] text-black"
-        } w-full h-screen overflow-hidden md:grid-cols-2`}
+        } w-full h-screen overflow-hidden md:grid-cols-1`}
       >
-        <div className="signup-left hidden gap-3 px-5 justify-end overflow-hidden w-full md:flex">
+        {/* <div className="signup-left hidden gap-3 px-5 justify-end overflow-hidden w-full md:flex">
           <div className={`flex flex-col gap-8 custom-card-1 `}>
             <CustomCard />
             <CustomCard />
@@ -199,9 +199,9 @@ export default function Login() {
             <CustomCard />
             <CustomCard />
           </div>
-        </div>
+        </div> */}
         <div className="signup-right flex justify-center items-center w-full">
-          <Card className={`border-0 rounded-none shadow-none ${theme === "dark" ? "bg-[#040B11] text-white" : "bg-[#EEEEEE] text-black"} max-w-xl w-full`}>
+          <Card className={`border-0 rounded-none shadow-none ${theme === "dark" ? "bg-enipp-dark1 text-white" : "bg-[#EEEEEE] text-black"} max-w-xl w-full`}>
             <CardHeader className="space-y-1">
               <CardTitle className="text-[36px] font-bold text-center tracking-tight">
                 Reset Password
@@ -287,11 +287,11 @@ export default function Login() {
 
   return (
     <div
-      className={`min-h-screen grid grid-cols-1 items-center ${
-        theme === "dark" ? "bg-[#040B11] text-white" : "bg-[#EEEEEE] text-black"
-      } w-full h-screen overflow-hidden md:grid-cols-2`}
+      className={`min-h-screen grid grid-cols-1 items-center justify-center ${
+        theme === "dark" ? "bg-enipp-dark1 text-white" : "bg-[#EEEEEE] text-black"
+      } w-full h-screen overflow-hidden md:grid-cols-1`}
     >
-      <div className="signup-left hidden gap-3 px-5 justify-end overflow-hidden w-full md:flex">
+      {/* <div className="signup-left hidden gap-3 px-5 justify-end overflow-hidden w-full md:flex">
         <div className={`flex flex-col gap-8 custom-card-1 `}>
           <CustomCard />
           <CustomCard />
@@ -316,12 +316,12 @@ export default function Login() {
           <CustomCard />
           <CustomCard />
         </div>
-      </div>
+      </div> */}
       <div className="signup-right flex justify-center items-center w-full">
         <Card
           className={`border-0 rounded-none shadow-none ${
             theme === "dark"
-              ? "bg-[#040B11] text-white"
+              ? "bg-enipp-dark1 text-white"
               : "bg-[#EEEEEE] text-black"
           } max-w-xl w-full`}
         >
@@ -395,7 +395,8 @@ export default function Login() {
                 </div>
               )}
 
-              <div className="flex justify-between items-center">
+              {/* desktop  */}
+              <div className="justify-between items-center hidden md:flex">
                 <label className="flex items-center space-x-2 cursor-pointer">
                   <input
                     type="checkbox"
@@ -423,6 +424,37 @@ export default function Login() {
                 </button>
               </div>
 
+              {/* mobile  */}
+              <div className="justify-between md:hidden items-center grid grid-cols-1 space-y-2 text-sm">
+                <label className="flex items-center space-x-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    className="form-checkbox bg-zinc-800 rounded border-zinc-600 text-enipp-purple1 focus:ring-enipp-purple1"
+                    checked={rememberMe}
+                    onChange={() => setRememberMe(!rememberMe)}
+                  />
+                  <span className="">Remember me</span>
+                </label>
+
+                <div className="flex items-center justify-between">
+                  <button
+                    type="button"
+                    onClick={() => navigate("/signup")}
+                    className="text-enipp-purple1 hover:underline text-left"
+                  >
+                    Signup
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setForgotPasswordMode(true)}
+                    className="text-enipp-purple1 hover:underline text-left"
+                  >
+                    Forgot password?
+                  </button>
+                </div>
+              </div>
+
               <Button
                 type="submit"
                 className="w-full flex justify-center items-center bg-gradient-to-r from-enipp-purple1 to-enipp-purple2 border border-enipp-purple1 text-white tf-button after:!bg-black rounded-md shadow-md after:rounded-md"
@@ -448,7 +480,7 @@ export default function Login() {
                 <span
                   className={`px-2 ${
                     theme === "dark"
-                      ? "bg-[#040B11] text-zinc-400"
+                      ? "bg-enipp-dark1 text-zinc-400"
                       : "bg-[#EEEEEE] text-zinc-900"
                   }`}
                 >

@@ -9,11 +9,12 @@ const RoadmapComponent = () => {
       <div
         className={`${
           theme === "dark"
-            ? "bg-[#040B11] text-white"
+            ? "bg-enipp-dark1 text-white"
             : "bg-[#EEEEEE] text-black"
-        } w-full py-12 md:py-[100px] flex flex-col gap-[60px] `}
+        } w-full py-12 md:py-[100px] flex flex-col gap-8 md:gap-[60px] relative`}
       >
-        <h1 className="text-4xl w-full text-center">ROADMAP <br /> <span className="font-[quicksand] text-2xl font-bold">2025</span></h1>
+        <div className="glow-6 z-10 top-0 right-0"></div>
+        <h1 className="text-4xl w-full z-20 text-center font-extrabold md:text-6xl">ROADMAP <br /> <span className=" text-2xl font-bold md:text-4xl">2025</span></h1>
         <Roadmap theme={theme} />
       </div>
     </>

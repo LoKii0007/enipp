@@ -32,7 +32,7 @@ export function Model1(props) {
   }, [actions, animations])
 
   return (
-    <group ref={group} {...props} dispose={null} scale={isMobile ? 0.1 : isTablet ? 0.2 : 0.3} >
+    <group ref={group} {...props} dispose={null} scale={isMobile ? 0.2 : isTablet ? 0.2 : 0.3} >
       <group name="Scene">
         <mesh name="Middle_Heart" geometry={nodes.Middle_Heart.geometry} material={materials['Middle Heart Texture 1']} position={[0, 0, -1.05]} />
         <mesh name="Middle_Small_Heart" geometry={nodes.Middle_Small_Heart.geometry} material={materials['Middle Small Heart Texture 1']} position={[0.015, -0.588, -1.05]} />

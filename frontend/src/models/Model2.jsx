@@ -23,7 +23,7 @@ export function Model2(props) {
   }, [actions, animations])
 
   return (
-    <group ref={group} {...props} dispose={null} scale={.6} position-y={-5}>
+    <group ref={group} {...props} dispose={null} scale={.6} position-y={-9}>
       <group name="Scene">
         <mesh name="Shape6__0003" geometry={nodes.Shape6__0003.geometry} material={materials['Scene_-_Root']} position={[7.41, 24.976, -11.543]} rotation={[Math.PI, 0, Math.PI]} scale={[1.169, 1.275, 1.51]} />
         <group name="Panda_Belt002" position={[1.3, -2.744, -2.247]} rotation={[0, 0.067, 0]} scale={0.165}>

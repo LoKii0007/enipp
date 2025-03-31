@@ -6,7 +6,7 @@ const NFTCard = () => {
   return (
     <div className={`flex items-center justify-center min-h-screen w-full ${
         theme === "dark"
-          ? "bg-[#040B11] text-white"
+          ? "bg-enipp-dark1  text-white"
           : "bg-[#EEEEEE] text-black"
       } `}>
       <div className=" w-full grid grid-cols-2 gap-12 justify-center items-center px-[15%]">
@@ -64,7 +64,7 @@ const NFTCard = () => {
 
           {/* Buttons */}
           <div className="mt-4 space-y-4">
-            <button className={`w-full tf-button ${theme === 'dark' ? ' text-[#ffffffc8]' : ' text-zinc-600'} border border-[#21E786] bg-[#21E786] hover:after:bg-[#040B11] font-semibold py-2 flex justify-center items-center`}>
+            <button className={`w-full tf-button ${theme === 'dark' ? ' text-[#ffffffc8]' : ' text-zinc-600'} border border-[#21E786] bg-[#21E786] hover:after:bg-enipp-purple1 font-semibold py-2 flex justify-center items-center`}>
             <div className="z-20">BUY ON OPENSEA</div>
             </button>
             <div className="flex gap-4 mt-2">

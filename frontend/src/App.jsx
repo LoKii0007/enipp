@@ -19,6 +19,7 @@ import "./index.css";
 import { useEffect, useState } from "react";
 import AuthHook from "./hooks/AuthContext";
 import { Loader2 } from "lucide-react";
+import PrivacyPolicy from "./screens/PrivacyPolicy";
 
 // Prismic imports
 // import { PrismicProvider } from '@prismicio/react';
@@ -68,6 +69,7 @@ function AppContent() {
         <Route path="/login" element={<Login />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/email-confirmation" element={<EmailConfirmation />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       </Routes>
       {showNavbar && <Footer />}
     </>

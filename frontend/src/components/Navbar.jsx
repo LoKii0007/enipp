@@ -19,7 +19,7 @@ import { Loader2 } from "lucide-react";
 const navMenu = [
   { name: "Home", route: "home" },
   { name: "About", route: "about" },
-  { name: "Marketplace", route: "marketplace" },
+  // { name: "Marketplace", route: "marketplace" },
   { name: "Team", route: "team" },
   { name: "Contact", route: "contact" },
 ];
@@ -110,7 +110,7 @@ const Navbar = () => {
       <nav
         className={`sticky hidden md:flex top-0 left-0 py-3 px-8 ${
           theme === "dark"
-            ? "bg-[#040B11] text-white"
+            ? "bg-enipp-dark1 text-white"
             : "bg-[#ffffff] text-black"
         } w-full z-50 gap-12 text-xl justify-center items-center`}
       >
@@ -142,7 +142,7 @@ const Navbar = () => {
             Sign In
           </div>
         )}
-        {theme === "dark" ? (
+        {/* {theme === "dark" ? (
           <div
             onClick={() => setTheme("light")}
             className="nav-item p-3 hover:text-enipp-purple1 text-enipp-purple1 rounded-full bg-[#141B22] cursor-pointer"
@@ -174,14 +174,14 @@ const Navbar = () => {
               <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278" />
             </svg>
           </div>
-        )}
+        )} */}
       </nav>
 
       {/* Mobile Navbar */}
       <nav
         className={`flex sticky top-0 z-50 flex-col px-5 py-4 ${
           theme === "dark"
-            ? "bg-[#040B11] text-white"
+            ? "bg-enipp-dark1 text-white"
             : "bg-[#ffffff] text-black"
         } w-screen md:hidden relative`}
       >
@@ -191,7 +191,7 @@ const Navbar = () => {
             <Link to="/" className="text-2xl font-extrabold">ENIPP</Link>
           </div>
           <div className="flex gap-3 items-center">
-            {theme === "dark" ? (
+            {/* {theme === "dark" ? (
               <div
                 onClick={() => setTheme("light")}
                 className="nav-item p-3 hover:text-enipp-purple1 text-enipp-purple1 rounded-full bg-[#141B22] cursor-pointer"
@@ -223,7 +223,7 @@ const Navbar = () => {
                   <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278" />
                 </svg>
               </div>
-            )}
+            )} */}
 
             <button
               onClick={() => setNavBottom((prev) => !prev)}
@@ -261,9 +261,9 @@ const Navbar = () => {
         <div
           className={` ${
             theme === "dark"
-              ? "bg-[#040B11] text-white"
+              ? "bg-enipp-dark1 text-white"
               : "bg-[#ffffff] text-black"
-          }nav-bottom px-5 transition-all duration-500 ease-in-out flex flex-col overflow-hidden absolute gap-2 top-[74px]  w-full left-0 ${
+          }nav-bottom px-5 transition-all duration-500 ease-in-out flex flex-col overflow-hidden absolute gap-2 top-[64px] z-50 w-full left-0 ${
             navBottom ? "h-[244px] pb-3" : "h-0 p-0"
           }`}
         >
@@ -274,7 +274,10 @@ const Navbar = () => {
           )}
           {navMenu.map((item, index) => (
             <div
-              onClick={() => navigate(`/${item.route}`)}
+              onClick={() =>{ 
+                navigate(`/${item.route}`)
+                setNavBottom(false)
+              }}
               key={index}
               className="nav-item py-2 cursor-pointer"
             >

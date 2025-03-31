@@ -10,8 +10,8 @@ const About = () => {
   return (
     <>
       <div className="contact-us min-h-screen w-full">
-          <PageHeading heading="About Us" />
-          <div className={`flex justify-center items-center w-full py-12 ${theme === 'dark' ? 'bg-[#040B11]' : 'bg-[#EEEEEE]'}`}>
+          {/* <PageHeading heading="About Us" /> */}
+          <div className={`flex justify-center items-center w-full py-12 ${theme === 'dark' ? 'bg-enipp-dark1' : 'bg-[#EEEEEE]'}`}>
             <AboutComponent/>
           </div>
       </div>

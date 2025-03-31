@@ -13,11 +13,13 @@ const TeamComponent = ({ isMobile }) => {
       <div
         className={`${
           theme === "dark"
-            ? "bg-[#040B11] text-white"
+            ? "bg-enipp-dark1 text-white"
             : "bg-[#EEEEEE] text-black"
-        } team flex flex-col gap-12 px-5 md:px-[15%] w-full justify-center h-[calc(100vh-200px)]`}
+        } team relative flex flex-col gap-8 px-5 pt-12 md:gap-[60px] md:px-[15%] w-full justify-center`}
       >
-        <h2 className="text-center text-[36px] md:text-[44px]">OUR TEAM</h2>
+          <div className="glow-6 z-10 top-0 right-0"></div>
+
+        <h2 className="text-center z-20 text-[36px] font-extrabold md:text-6xl">OUR TEAM</h2>
         <Splide
           hasTrack={false}
           options={{
