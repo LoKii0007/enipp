@@ -13,11 +13,11 @@ const AboutComponent = () => {
           theme === "dark"
             ? "bg-[#040B11] text-white"
             : "bg-[#EEEEEE] text-black"
-        } flex flex-col gap-[80px] items-center justify-center w-full `}
+        } flex flex-col gap-[80px] items-center justify-center w-full`}
       >
-        <div className="about-top flex flex-col gap-5 items-center justify-center p-5 md:p-0 max-w-[1300px] w-full">
+        <div className="about-top flex flex-col gap-5 items-center justify-center p-5 md:p-0 max-w-[1200px] w-full">
           <h1 className=" text-[36px] md:text-[44px] font-bold">ABOUT US</h1>
-          <h5 className=" text-sm md:text-[18px] text-center px-5 w-full md:px-10 lg:w-1/2">
+          <h5 className=" text-sm md:text-[18px] text-center px-5 w-full md:px-10  xl:px-12">
             At Enipp, we transform ideas into vibrant realities by blending
             innovative thinking with artistic expression. We empower users to
             forge memorable connections that bridge digital and physical realms,
@@ -41,7 +41,7 @@ const AboutComponent = () => {
           </div>
         </div>
 
-        <div className="about-bottom grid grid-cols-1 px-5 gap-5 md:gap-8 md:grid-cols-2 max-w-[1300px] w-full">
+        <div className="about-bottom grid grid-cols-1 px-5 gap-5 md:gap-12 md:grid-cols-2 max-w-[1000px] w-full">
           {thumnails.map((item, index) => (
             <AboutCard item={item} theme={theme} key={index} index={index} />
           ))}

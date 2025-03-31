@@ -11,12 +11,12 @@ export default function FaqCard({ theme, item }) {
       <AccordionItem
         className={` ${
           theme === "dark"
-            ? "bg-[#141B22] text-white"
+            ? "bg-[#141B22] gradient-1 overflow-hidden text-white"
             : "bg-[#ffffff] text-black"
         } border-none  `}
         value="item-1"
       >
-        <AccordionTrigger className='px-5 border-none text-ellipsis overflow-hidden whitespace-nowrap font-extrabold' >{item.question}</AccordionTrigger>
+        <AccordionTrigger className='px-5 border-none text-ellipsis overflow-hidden whitespace-nowrap font-bold' >{item.question}</AccordionTrigger>
         <AccordionContent className='px-5 border-none ' >
           {item.answer}
         </AccordionContent>

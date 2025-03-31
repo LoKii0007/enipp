@@ -126,7 +126,7 @@ export default function SignUp() {
   if (verificationSent) {
     return (
       <div className="min-h-screen flex justify-center items-center bg-black w-full">
-        <Card className="border-0 rounded-none bg-black w-full max-w-xl mx-4">
+        <Card className="border-0 rounded-md shadow-md bg-black w-full max-w-xl mx-4">
           <CardHeader className="space-y-1">
             <CardTitle className="text-[36px] font-bold text-center tracking-tight text-white">
               Verify Your Email
@@ -207,7 +207,7 @@ export default function SignUp() {
       <div
         className={` flex justify-center items-center w-full`}
       >
-        <Card className={`border-0 rounded-none shadow-none w-full max-w-xl ${theme === "dark"
+        <Card className={`border-0 rounded-md shadow-none w-full max-w-xl ${theme === "dark"
               ? "bg-[#040B11] text-white"
               : "bg-[#EEEEEE] text-black"
           }`}>
@@ -227,7 +227,7 @@ export default function SignUp() {
               <Input
                 type="text"
                 placeholder="Name"
-                className={`${theme === "dark" ? "bg-zinc-800 text-white placeholder:text-zinc-400" : "bg-zinc-200 text-black placeholder:text-zinc-900"} px-4 py-3 border-none rounded-none`}
+                className={`${theme === "dark" ? "bg-zinc-800 text-white placeholder:text-zinc-400" : "bg-zinc-200 text-black placeholder:text-zinc-900"} px-4 py-3 border-none rounded-md shadow-md`}
                 {...register("name", { required: "Name is required" })}
               />
               {errors.name && (
@@ -237,7 +237,7 @@ export default function SignUp() {
               <Input
                 type="email"
                 placeholder="Email"
-                className={`${theme === "dark" ? "bg-zinc-800 text-white placeholder:text-zinc-400" : "bg-zinc-200 text-black placeholder:text-zinc-900"} px-4 py-3 border-none rounded-none`}
+                className={`${theme === "dark" ? "bg-zinc-800 text-white placeholder:text-zinc-400" : "bg-zinc-200 text-black placeholder:text-zinc-900"} px-4 py-3 border-none rounded-md shadow-md`}
                 {...register("email", { required: "Email is required" })}
               />
               {errors.email && (
@@ -247,7 +247,7 @@ export default function SignUp() {
               <Input
                 type="password"
                 placeholder="Password"
-                className={`${theme === "dark" ? "bg-zinc-800 text-white placeholder:text-zinc-400" : "bg-zinc-200 text-black placeholder:text-zinc-900"} px-4 py-3 border-none rounded-none`}
+                className={`${theme === "dark" ? "bg-zinc-800 text-white placeholder:text-zinc-400" : "bg-zinc-200 text-black placeholder:text-zinc-900"} px-4 py-3 border-none rounded-md shadow-md`}
                 {...register("password", {
                   required: "Password is required",
                   minLength: 6,
@@ -261,7 +261,7 @@ export default function SignUp() {
 
               <Button
                 type="submit"
-                className="w-full flex items-center justify-center tf-button after:bg-black bg-gradient-to-r from-enipp-purple1 to-enipp-purple2 border border-enipp-purple1 text-white rounded-none"
+                className="w-full flex items-center justify-center tf-button after:bg-black bg-gradient-to-r from-enipp-purple1 to-enipp-purple2 border border-enipp-purple1 text-white rounded-md shadow-md after:rounded-md"
                 disabled={loading}
               >
                 {loading ? (
@@ -285,7 +285,7 @@ export default function SignUp() {
             <div className="grid grid-cols-1 gap-4">
               <button
                 onClick={signInWithGoogle}
-                className="flex items-center justify-center gap-2 text-white bg-zinc-900 tf-button relative py-4"
+                className="flex items-center justify-center rounded-md shadow-md gap-2 text-white bg-zinc-900 tf-button relative py-4"
                 disabled={loading}
               >
                 <div className="z-20">

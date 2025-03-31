@@ -17,7 +17,8 @@ export default {
           DEFAULT: '#c463a8', // Custom blue color
           purple1: '#c463a8', // Lighter shade
           purple2: '#63285F', // Lighter shade
-          dark: '#21618c', // Darker shade
+          purple2: '#63285F', // Lighter shade
+          dark: '#360C3C', // Darker shade
         },
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',

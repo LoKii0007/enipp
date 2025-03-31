@@ -2,12 +2,15 @@ import { useState } from "react";
 import supabase from "@/supabase/supabase";
 import useTheme from "@/hooks/ThemeContex";
 import toast from "react-hot-toast";
+import { Loader2 } from "lucide-react";
+import { Link } from "react-router-dom";
+import { companyInfo } from "@/utils/constants";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: "",
+    subject: "",
     message: "",
   });
   const [loading, setLoading] = useState(false);
@@ -28,7 +31,7 @@ const ContactForm = () => {
       if (error) throw error;
       
       toast.success("Message sent successfully.");
-      setFormData({ name: "", email: "", phone: "", message: "" });
+      setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (error) {
       console.error("Error submitting form:", error);
       toast.error('An error occurred. Please try again later.');
@@ -57,7 +60,7 @@ const ContactForm = () => {
             </svg>
           </span>
           <h2 className="font-bold text-xl mt-2">Location</h2>
-          <p className="font-sans">D-52 kalkaji, New Delhi, 110019</p>
+          <p className="font-sans">{companyInfo.address}</p>
         </div>
         <div className="border border-gray-700 p-6 text-center flex flex-col gap-5">
           <span className="text-enipp-purple1 flex justify-center items-center text-3xl">
@@ -73,7 +76,7 @@ const ContactForm = () => {
             </svg>
           </span>
           <h2 className="font-bold text-xl mt-2">Email</h2>
-          <p className="font-sans">Admin@enipp.com</p>
+          <p className="font-sans">{companyInfo.email}</p>
         </div>
         <div className="border border-gray-700 p-6 text-center flex flex-col gap-5">
           <span className="text-enipp-purple1 flex justify-center items-center text-3xl">
@@ -92,7 +95,7 @@ const ContactForm = () => {
             </svg>
           </span>
           <h2 className="font-bold text-xl mt-2">Phone</h2>
-          <p className="font-sans">+91 9971175159</p>
+          <p className="font-sans">{companyInfo.phone}</p>
         </div>
       </div>
 
@@ -124,9 +127,9 @@ const ContactForm = () => {
         </div>
         <input
           type="text"
-          name="phone"
-          placeholder="Phone Number"
-          value={formData.phone}
+          name="subject"
+          placeholder="Subject"
+          value={formData.subject}
           onChange={handleChange}
           className="w-full p-3 mt-4 bg-[#C2C3C526] border border-gray-600 font-sans"
           required
@@ -139,21 +142,34 @@ const ContactForm = () => {
           className="w-full p-3 mt-4 bg-[#C2C3C526] border border-gray-600 h-32 font-sans"
           required
         ></textarea>
-        <div className="w-full flex justify-center items-center mt-5">
+        <div className="w-full grid grid-cols-2 gap-12 justify-center items-center mt-5">
           <button
             type="submit"
             className={`flex items-center justify-center gap-2 border-enipp-purple1 after:bg-gradient-to-r after:from-enipp-purple1 after:to-enipp-purple2 border  ${
               theme === "dark"
                 ? " text-white"
                 : " text-black"
-            }  tf-button relative p-4 px-10`}
+            } tf-button relative p-4 px-10`}
             disabled={loading}
           >
             <div className="z-20"></div>
             <span className="z-20">
-              {loading ? "Sending..." : "Send Message"}
+              {loading ? <Loader2 className="animate-spin w-5 h-5" /> : "Send Message"}
             </span>
           </button>
+          <Link
+            to={companyInfo.social.calendar}
+            target="_blank"
+            className={`flex items-center justify-center gap-2 border-enipp-purple1 after:bg-gradient-to-r after:from-enipp-purple1 after:to-enipp-purple2 border  ${
+              theme === "dark"
+                ? " text-white"
+                : " text-black"
+            } tf-button relative p-4 px-10`}
+          >
+            <span className="z-20">
+              Schedule a Call
+            </span>
+          </Link>
         </div>
       </form>
     </div>

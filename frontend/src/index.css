@@ -28,3 +28,9 @@ body {
   -o-transform: scale(1.5, 1) translate(85px, 0px);
   transform: scale(1.5, 1) translate(85px, 0px);
 }
+
+.gradient-1 {
+  background-color: #040B11;
+  border-radius: 10px;
+  border: 0.2px solid #ffffff50;
+}

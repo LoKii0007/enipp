@@ -225,7 +225,7 @@ export default function Login() {
                     </p>
                   </div>
                   <Button
-                    className="w-full bg-zinc-800 hover:bg-zinc-700 text-white shadow-none rounded-none"
+                    className="w-full bg-zinc-800 hover:bg-zinc-700 text-white "
                     onClick={() => setForgotPasswordMode(false)}
                   >
                     Back to Login
@@ -243,7 +243,7 @@ export default function Login() {
                       theme === "dark"
                         ? "bg-zinc-800 text-white placeholder:text-zinc-400"
                         : "bg-zinc-200 text-black placeholder:text-zinc-900"
-                    } px-4 py-3 border-none rounded-none`}
+                    } px-4 py-3 border-none `}
                     {...register("email", { required: "Email is required" })}
                   />
                   {errors.email && (
@@ -259,14 +259,14 @@ export default function Login() {
                         theme === "dark"
                           ? "bg-zinc-800 hover:bg-zinc-700 text-white"
                           : "bg-zinc-200 hover:bg-zinc-300 text-black"
-                      } rounded-none shadow-none tf-button after:!bg-gradient-to-r after:from-enipp-purple1 after:to-enipp-purple2`}
+                      } tf-button after:rounded-md after:!bg-gradient-to-r after:from-enipp-purple1 after:to-enipp-purple2`}
                       onClick={() => setForgotPasswordMode(false)}
                     >
                       <div className="z-20">Back to Login</div>
                     </Button>
                     <Button
                       type="submit"
-                      className="bg-gradient-to-r from-enipp-purple1 to-enipp-purple2 border border-enipp-purple1 text-white rounded-none tf-button after:!bg-black"
+                      className="bg-gradient-to-r from-enipp-purple1 to-enipp-purple2 border border-enipp-purple1 text-white after:rounded-md tf-button after:!bg-black"
                       disabled={resetPasswordLoading}
                     >
                       {resetPasswordLoading ? (
@@ -345,7 +345,7 @@ export default function Login() {
                   theme === "dark"
                     ? "bg-zinc-800 text-white placeholder:text-zinc-400"
                     : "bg-zinc-200 text-black placeholder:text-zinc-900"
-                } px-4 py-3 border-none rounded-none`}
+                } px-4 py-3 border-none `}
                 {...register("email", { required: "Email is required" })}
               />
               {errors.email && (
@@ -359,7 +359,7 @@ export default function Login() {
                   theme === "dark"
                     ? "bg-zinc-800 text-white placeholder:text-zinc-400"
                     : "bg-zinc-200 text-black placeholder:text-zinc-900"
-                } px-4 py-3 border-none rounded-none`}
+                } px-4 py-3 border-none `}
                 {...register("password", {
                   required: "Password is required",
                   minLength: {
@@ -382,7 +382,7 @@ export default function Login() {
                   </p>
                   <Button
                     type="button"
-                    className="w-full bg-gradient-to-r from-enipp-purple1 to-enipp-purple2 border border-enipp-purple1 tf-button after:!bg-black text-white rounded-none"
+                    className="w-full bg-gradient-to-r from-enipp-purple1 to-enipp-purple2 border border-enipp-purple1 tf-button after:!bg-black text-white after:rounded-md"
                     onClick={handleResendConfirmation}
                     disabled={resendLoading}
                   >
@@ -425,7 +425,7 @@ export default function Login() {
 
               <Button
                 type="submit"
-                className="w-full flex justify-center items-center bg-gradient-to-r from-enipp-purple1 to-enipp-purple2 border border-enipp-purple1 text-white tf-button after:!bg-black rounded-none "
+                className="w-full flex justify-center items-center bg-gradient-to-r from-enipp-purple1 to-enipp-purple2 border border-enipp-purple1 text-white tf-button after:!bg-black rounded-md shadow-md after:rounded-md"
                 disabled={loading}
               >
                 {loading ? (
@@ -460,7 +460,7 @@ export default function Login() {
             <div className="grid grid-cols-1 gap-4">
               <button
                 onClick={signInWithGoogle}
-                className="flex items-center justify-center gap-2 text-white bg-zinc-900 tf-button relative py-4"
+                className="flex items-center justify-center gap-2 text-white bg-zinc-900 tf-button relative py-4 rounded-md shadow-md"
                 disabled={loading}
               >
                 <div className="z-20">

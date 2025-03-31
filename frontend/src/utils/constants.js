@@ -124,3 +124,19 @@ export const faq = [
     answer: "Users can tap on AR products to view details, add to cart, and proceed to checkout seamlessly.",
   },
 ];
+
+export const companyInfo = {
+  name: "Enipp",
+  address: "D-52 kalkaji, New Delhi, 110019",
+  phone: "+91 9971175159",
+  email: "admin@enipp.com",
+  website: "https://www.enipp.com",
+  social: { 
+    facebook: "https://www.facebook.com/enipp",
+    instagram: "https://www.instagram.com/enipp",
+    twitter: "https://www.twitter.com/enipp",
+    linkedin: "https://www.linkedin.com/company/enipp",
+    youtube: "https://www.youtube.com/channel/enipp",
+    calendar: "https://calendly.com/kabirsinghpahwa/get-in-touch",  
+  },
+};

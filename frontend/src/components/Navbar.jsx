@@ -19,7 +19,7 @@ import { Loader2 } from "lucide-react";
 const navMenu = [
   { name: "Home", route: "home" },
   { name: "About", route: "about" },
-  { name: "Roadmap", route: "roadmap" },
+  { name: "Marketplace", route: "marketplace" },
   { name: "Team", route: "team" },
   { name: "Contact", route: "contact" },
 ];
