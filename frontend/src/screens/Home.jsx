@@ -48,7 +48,7 @@ const Home = () => {
                 express beyond <br /> reality
               </div>
 
-              <div className="text-left w-full text-lg">
+              <div className="text-left w-full text-2xl">
                 Create, Customize & Share Your 3D Experiences with Ease!
               </div>
               <div className="mt-10 grid grid-cols-2 gap-8 w-full max-w-xl md:text-xl">
