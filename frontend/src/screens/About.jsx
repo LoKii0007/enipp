@@ -11,7 +11,7 @@ const About = () => {
     <>
       <div className="contact-us min-h-screen w-full">
           {/* <PageHeading heading="About Us" /> */}
-          <div className={`flex justify-center items-center w-full py-12 ${theme === 'dark' ? 'bg-enipp-dark1' : 'bg-[#EEEEEE]'}`}>
+          <div className={`flex justify-center items-center w-full pt-7 pb-12 ${theme === 'dark' ? 'bg-enipp-dark1' : 'bg-[#EEEEEE]'}`}>
             <AboutComponent/>
           </div>
       </div>

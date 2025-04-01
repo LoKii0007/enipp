@@ -1,7 +1,6 @@
 import React from "react";
 import { Canvas } from "@react-three/fiber";
-import { Environment, OrbitControls, Text } from "@react-three/drei";
-import { Model1 } from "../models/Model1";
+import { Environment, OrbitControls } from "@react-three/drei";
 import { Model2 } from "../models/Model2";
 import { DiscoModel } from "../models/Disco";
 import { HeartModel } from "@/models/HeartModel";
@@ -11,13 +10,13 @@ const AboutCard = ({ item, theme, index }) => {
   return (
     <>
       <div
-        className={`about-card custom-card cursor-pointer w-full overflow-hidden ${
+        className={`about-card cursor-pointer w-full overflow-hidden ${
           theme === "dark"
-            ? "bg-[#141B22] text-white gradient-1"
+            ? "bg-enipp-dark1 text-white gradient-1"
             : "bg-[#ffffff] text-black"
-        } justify-center items-center flex flex-col gap-6 relative `}
+        } justify-center items-center flex flex-col relative `}
       >
-        <div className="text-center text-[18px] text-[#8D8F93] justify-center flex items-center w-full h-[40vh]">
+        <div className="text-center text-[18px] text-[#8D8F93] justify-center flex items-center w-full h-[20vh] min-h-[170px] md:h-[40vh]">
           {index === 0 && (
             <Canvas camera={{ position: [0, 0, 10], fov: 50 }}>
               <ambientLight intensity={0.5} />

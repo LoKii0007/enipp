@@ -10,7 +10,7 @@ const PageHeading = ({ heading }) => {
           theme === "dark" ? "bg-enipp-dark" : "bg-enipp-dark"
         } flex justify-center items-center`}
       >
-        <h1 className="text-white text-6xl font-bold uppercase">{heading}</h1>
+        <h1 className="text-white text-4xl md:text-6xl font-bold uppercase">{heading}</h1>
       </div>
     </>
   );

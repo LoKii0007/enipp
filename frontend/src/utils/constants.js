@@ -208,21 +208,6 @@ export const policies = [
     ],
   },
   {
-    title: "Cancellation and Refund Policy",
-    sections: [
-      {
-        heading: "Cancellation",
-        content:
-          "Users must submit a cancellation request via email within 15 days of availing the service. Requests beyond this period will not be eligible.",
-      },
-      {
-        heading: "Refund",
-        content:
-          "Approved refunds will be processed via NEFT, RTGS, or another authorized payment method. Users must ensure correct banking details. Refunds are not available in certain cases, such as incorrect payment details or external service failures.",
-      },
-    ],
-  },
-  {
     title: "Terms and Conditions",
     lastUpdated: "31st March 2025",
     sections: [
@@ -263,4 +248,34 @@ export const policies = [
       },
     ],
   },
+  {
+    title: "Cancellation and Refund Policy",
+    sections: [
+      {
+        heading: "Cancellation",
+        content:
+          "Users must submit a cancellation request via email within 15 days of availing the service. Requests beyond this period will not be eligible.",
+      },
+      {
+        heading: "Refund",
+        content:
+          "Approved refunds will be processed via NEFT, RTGS, or another authorized payment method. Users must ensure correct banking details. Refunds are not available in certain cases, such as incorrect payment details or external service failures.",
+      },
+    ],
+  },
 ];
+
+export const pathnames = {
+  home: "/",
+  about: "/about",
+  roadmap: "/roadmap",
+  team: "/team",
+  contact: "/contact",
+  signup: "/signup",
+  login: "/login",
+  resetPassword: "/reset-password",
+  emailConfirmation: "/email-confirmation",
+  shop: "/shop",
+  privacyPolicy: "/privacy-policy",
+  termsAndConditions: "/terms-and-conditions",
+};

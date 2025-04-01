@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import supabase from "@/supabase/supabase";
 import toast from "react-hot-toast";
-import { Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import useTheme from "@/hooks/ThemeContex";
-import { companyInfo } from "@/utils/constants";
+import { companyInfo, pathnames } from "@/utils/constants";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
@@ -60,15 +59,20 @@ const Footer = () => {
             <div className="flex flex-col gap-3 h-full">
               <div className=" md:text-3xl">Services</div>
               <Link
-                onClick={()=> toast("Coming Soon", {
-                  color: "green",
-                })}
+                onClick={() =>
+                  toast("Coming Soon", {
+                    color: "green",
+                  })
+                }
                 // to="/no-code-editor"
                 className="capitalize text-[#c3c3c5] opacity-70"
               >
                 No code Editor
               </Link>
-              <Link to="/contact" className="capitalize text-[#c3c3c5] opacity-70">
+              <Link
+                to={pathnames.contact}
+                className="capitalize text-[#c3c3c5] opacity-70"
+              >
                 Custom Requests
               </Link>
               <Link
@@ -79,19 +83,31 @@ const Footer = () => {
               >
                 Collaborations
               </Link>
-              <Link to="/shop" className="capitalize text-[#c3c3c5] opacity-70">
-                Shop(coming soon)
+              <Link
+                onClick={() => toast("Coming Soon", {})}
+                className="capitalize text-[#c3c3c5] opacity-70"
+              >
+                Shop
               </Link>
             </div>
             <div className="flex flex-col gap-3 text-left h-full">
               <div className=" md:text-3xl">Links</div>
-              <Link to="/privacy-policy" className="capitalize text-[#c3c3c5] opacity-70">
+              <Link
+                to={pathnames.privacyPolicy}
+                className="capitalize text-[#c3c3c5] opacity-70"
+              >
                 Privacy Policy
               </Link>
-              <Link to="/terms" className="capitalize text-[#c3c3c5] opacity-70">
+              <Link
+                to={pathnames.termsAndConditions}
+                className="capitalize text-[#c3c3c5] opacity-70"
+              >
                 Terms of Service
               </Link>
-              <Link to="/contact" className="capitalize text-[#c3c3c5] opacity-70">
+              <Link
+                to={pathnames.contact}
+                className="capitalize text-[#c3c3c5] opacity-70"
+              >
                 Contact Us
               </Link>
               {/* <Link to="/careers" className="capitalize py-2 text-[#c3c3c5]">
@@ -128,9 +144,7 @@ const Footer = () => {
         </div>
         <div className="border-b border-zinc-700 mt-3 "></div>
         <div className="footer-bottom flex flex-col justify-center items-center pb-4 md:flex-row md:justify-between gap-4 ">
-          <div>
-            ENIPP - 2025 All rights reserved
-          </div>
+          <div>ENIPP - 2025 All rights reserved</div>
           <div className="flex gap-5">
             <Link
               to="https://www.instagram.com/enipp_official/"

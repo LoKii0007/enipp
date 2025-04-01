@@ -1,25 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useGLTF, useAnimations } from '@react-three/drei'
+import useTheme from '@/hooks/ThemeContex'
 
 export function Model1(props) {
   const group = React.useRef()
   const { nodes, materials, animations } = useGLTF('/models/model1-transformed.glb')
   const { actions } = useAnimations(animations, group)
-  const [isMobile, setIsMobile] = useState(false)
-  const [isTablet, setIsTablet] = useState(false)
-  const [isDesktop, setIsDesktop] = useState(false)
+  const { isMobile, isTablet } = useTheme()
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768)  
-      setIsTablet(window.innerWidth >= 768 && window.innerWidth <= 1024)
-      setIsDesktop(window.innerWidth > 1024)
-    }
-    window.addEventListener('resize', handleResize)
-    handleResize()
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
-  
   useEffect(() => {
     // Start animations if any exist
     if (animations.length > 0) {

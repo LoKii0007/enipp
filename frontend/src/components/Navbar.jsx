@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 
 const navMenu = [
-  { name: "Home", route: "home" },
+  { name: "Home", route: "" },
   { name: "About", route: "about" },
   // { name: "Marketplace", route: "marketplace" },
   { name: "Team", route: "team" },

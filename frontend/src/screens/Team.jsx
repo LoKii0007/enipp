@@ -27,7 +27,7 @@ const Team = () => {
     <>
       <div className="contact-us w-full">
         {/* <PageHeading heading="Our Team" /> */}
-        <div className={`flex justify-center items-center w-full py-12 ${theme === 'dark' ? 'bg-enipp-dark1' : 'bg-[#EEEEEE]'}`}> 
+        <div className={`flex justify-center items-center w-full pb-12 ${theme === 'dark' ? 'bg-enipp-dark1' : 'bg-[#EEEEEE]'}`}> 
           <TeamComponent isMobile={isMobile} />
         </div>
       </div>

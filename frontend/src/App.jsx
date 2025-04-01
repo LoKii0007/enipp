@@ -20,10 +20,21 @@ import { useEffect, useState } from "react";
 import AuthHook from "./hooks/AuthContext";
 import { Loader2 } from "lucide-react";
 import PrivacyPolicy from "./screens/PrivacyPolicy";
+import Terms from "./screens/Terms";
+import InitialLoader from "./components/InitialLoader";
+import { pathnames } from "./utils/constants";
 
-// Prismic imports
-// import { PrismicProvider } from '@prismicio/react';
-// import { createClient, linkResolver } from './prismic';
+
+const MODELS = [
+  '/models/flower-transformed.glb',
+  '/models/flower.gltf',
+  '/models/disco-transformed.glb',
+  '/models/disco.gltf',
+  '/models/disco.glb',
+  '/models/model2.gltf',
+  '/models/model1-transformed.glb',
+  '/models/model1.gltf'
+];
 
 // Loading component to show while auth state is initializing
 function LoadingScreen() {
@@ -41,6 +52,8 @@ function AppContent() {
   const location = useLocation();
   const [showNavbar, setShowNavbar] = useState(true);
   const { isLoading } = AuthHook();
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const [loadingProgress, setLoadingProgress] = useState(0);
 
   useEffect(() => {
     // Hide Navbar on EmailConfirmation and ResetPassword pages
@@ -50,26 +63,60 @@ function AppContent() {
     );
   }, [location]);
 
-  if (isLoading) {
-    return <LoadingScreen />;
+  useEffect(() => {
+    const preloadAssets = async () => {
+      const totalModels = MODELS.length;
+      let loadedModels = 0;
+
+      const preloadPromises = MODELS.map(model => {
+        return new Promise((resolve, reject) => {
+          const link = document.createElement('link');
+          link.rel = 'preload';
+          link.as = 'fetch';
+          link.href = model;
+          link.onload = () => {
+            loadedModels++;
+            setLoadingProgress((loadedModels / totalModels) * 100);
+            resolve();
+          };
+          link.onerror = reject;
+          document.head.appendChild(link);
+        });
+      });
+
+      try {
+        await Promise.all(preloadPromises);
+        // Add a small delay to ensure smooth transition
+        await new Promise(resolve => setTimeout(resolve, 500));
+        setIsInitialLoading(false);
+      } catch (error) {
+        console.error('Error preloading models:', error);
+        setIsInitialLoading(false);
+      }
+    };
+
+    preloadAssets();
+  }, []);
+
+  if (isLoading || isInitialLoading) {
+    return <InitialLoader progress={loadingProgress} />;
   }
 
   return (
     <>
       {showNavbar && <Navbar />}
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/roadmap" element={<Roadmap />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/team" element={<Team />} />
-        <Route path="/contact" element={<ContactUs />} />
+        <Route path={pathnames.home} element={<Home />} />
+        <Route path={pathnames.about} element={<About />} />
+        <Route path={pathnames.team} element={<Team />} />
+        <Route path={pathnames.contact} element={<ContactUs />} />
 
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/email-confirmation" element={<EmailConfirmation />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path={pathnames.signup} element={<SignUp />} />
+        <Route path={pathnames.login} element={<Login />} />
+        <Route path={pathnames.resetPassword} element={<ResetPassword />} />
+        <Route path={pathnames.emailConfirmation} element={<EmailConfirmation />} />
+        <Route path={pathnames.privacyPolicy} element={<PrivacyPolicy />} />
+        <Route path={pathnames.termsAndConditions} element={<Terms />} />
       </Routes>
       {showNavbar && <Footer />}
     </>
@@ -79,12 +126,12 @@ function AppContent() {
 function App() {
   return (
     <>
-      <ThemeProvider>
-        <AuthProvider>
-          <AppContent />
-        </AuthProvider>
-        <Toaster />
-      </ThemeProvider>
+        <ThemeProvider>
+          <AuthProvider>
+            <AppContent />
+          </AuthProvider>
+          <Toaster />
+        </ThemeProvider>
     </>
   );
 }

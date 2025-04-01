@@ -81,17 +81,17 @@ const Home = () => {
           </div>
 
           {/* mobile */}
-          <div className="hero z-30 w-full h-[calc(100vh-72px)] sm:hidden flex flex-col items-center relative justify-between px-5 py-8 overflow-y-hidden">
+          <div className="hero z-30 w-full h-[calc(100dvh-64px)] sm:hidden flex flex-col items-center relative justify-between px-5 py-8 overflow-y-hidden">
 
             <div className="uppercase break-words text-center overflow-hidden w-full tracking-[0px] text-[40px] font-bold leading-[100%]">
               with <span className="text-enipp-purple1">ENIPP</span> <br />
               express beyond <br /> reality
             </div>
 
-            <div className="flex justify-center items-center w-full h-full absolute top-0 ">
+            <div className="flex justify-center items-center w-full h-full absolute -top-[8vh] ">
               <div className="z-20 h-full w-full flex relative justify-center items-center">
                 <Model />
-                <div className="glow-5 z-10"></div>
+                <div className="glow-5 z-[1]"></div>
               </div>
             </div>
 
@@ -131,7 +131,7 @@ const Home = () => {
               : "bg-[#EEEEEE] text-black"
           } py-12`}
         >
-          <div className="glow-6 z-10 top-0 left-0"></div>
+          <div className="glow-6 z-[1] top-0 left-0"></div>
           <div className="services z-30 flex flex-col px-5 gap-8 md:gap-[100px] max-w-[1300px] w-full  ">
             <div className="flex justify-center items-center text-[36px] md:text-6xl">
               <div className="md:px-12 w-fit relative overflow-hidden text-center font-extrabold">
@@ -159,7 +159,7 @@ const Home = () => {
               : "bg-[#EEEEEE] text-black"
           } w-full pb-12 md:py-12 md:pb-[100px] flex justify-center items-center relative`}
         >
-          <div className="glow-6 z-10 top-0 left-0"></div>
+          <div className="glow-6 z-[1] top-0 left-0"></div>
           <div className="flex flex-col max-w-[1300px] w-full z-20 gap-8 md:gap-[60px] ">
             <h1 className="text-4xl md:text-6xl w-full text-center font-extrabold">
               FAQ

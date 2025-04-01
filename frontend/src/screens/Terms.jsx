@@ -1,7 +1,7 @@
 import React from 'react'
 import { policies } from '@/utils/constants'
 
-const PrivacyPolicy = () => {
+const Terms = () => {
   return (
     <>
       <div className="privacy w-full bg-enipp-dark1 text-white flex justify-center items-center p-4 md:p-12">
@@ -10,7 +10,7 @@ const PrivacyPolicy = () => {
           
           {/* All Policies Listed Vertically */}
           <div className="space-y-12">
-            {policies.slice(0, 1).map((policy, index) => (
+            {policies.slice(1).map((policy, index) => (
               <div key={index} className="policy-container">
                 <div className="mb-6 border-b pb-2 border-gray-200">
                   <h2 className="text-xl md:text-2xl font-bold text-white mb-2">
@@ -56,4 +56,4 @@ const PrivacyPolicy = () => {
   )
 }
 
-export default PrivacyPolicy
+export default Terms

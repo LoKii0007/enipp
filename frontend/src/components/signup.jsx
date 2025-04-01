@@ -179,7 +179,7 @@ export default function SignUp() {
         theme === "dark"
           ? "bg-enipp-dark1 text-white"
           : "bg-[#EEEEEE] text-black"
-      } w-full h-screen overflow-hidden`}
+      } w-full h-dvh overflow-hidden`}
     >
       {/* <div className="signup-left hidden gap-3 px-5 justify-end overflow-hidden w-full md:flex">
         <div className={`flex flex-col gap-8 custom-card-1 `}>
