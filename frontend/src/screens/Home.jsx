@@ -88,7 +88,7 @@ const Home = () => {
               express beyond <br /> reality
             </div>
 
-            <div className="flex justify-center items-center w-full h-full absolute -top-[8vh] ">
+            <div className="flex justify-center items-center w-full h-full absolute top-0 ">
               <div className="z-20 h-full w-full flex relative justify-center items-center">
                 <Model />
                 <div className="glow-5 z-[1]"></div>

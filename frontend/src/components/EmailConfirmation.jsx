@@ -26,13 +26,6 @@ export default function EmailConfirmation() {
   useEffect(() => {
     const verifyEmail = async () => {
       try {
-        // The hash contains the access token and type=signup
-        if (!location.hash.includes("type=signup")) {
-          setError("Invalid confirmation link");
-          setVerifying(false);
-          setShowFooter(true);
-          return;
-        }
 
         // Get the current session
         const { data: sessionData } = await supabase.auth.getSession();
