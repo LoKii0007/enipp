@@ -81,15 +81,15 @@ const Navbar = () => {
               onClick={() => setShowSignOutDialog(false)}
               className={`${
                 theme === "dark"
-                  ? "bg-transparent border-zinc-700 text-white hover:bg-zinc-800 hover:text-white"
-                  : "bg-transparent border-zinc-300 text-black hover:bg-zinc-100 hover:text-black"
+                  ? "bg-transparent border-zinc-700 text-white md:hover:bg-zinc-800 md:hover:text-white"
+                  : "bg-transparent border-zinc-300 text-black md:hover:bg-zinc-100 md:hover:text-black"
               } tf-button relative rounded-none`}
             >
               <div className="z-20">Cancel</div>
             </Button>
             <Button
               onClick={handleSignOut}
-              className={`w-[100px] bg-gradient-to-r from-enipp-purple1 to-enipp-purple2 border hover:opacity-90 tf-button relative
+              className={`w-[100px] bg-gradient-to-r from-enipp-purple1 to-enipp-purple2 border md:hover:opacity-90 tf-button relative
                 ${theme === "dark" ? "after:!bg-zinc-800 text-white border-white" : "after:!bg-[#ffffff] text-black border-black"}
                 rounded-none`}
               disabled={isSigningOut}
@@ -122,7 +122,7 @@ const Navbar = () => {
           <div
             onClick={() => navigate(`/${item.route}`)}
             key={index}
-            className="nav-item py-2 hover:text-enipp-purple1 cursor-pointer"
+            className="nav-item py-2 md:hover:text-enipp-purple1 cursor-pointer"
           >
             {item.name}
           </div>
@@ -130,14 +130,14 @@ const Navbar = () => {
         {userLoggedIn ? (
           <div
             onClick={openSignOutDialog}
-            className="nav-item py-2 hover:text-enipp-purple1 cursor-pointer flex items-center gap-2"
+            className="nav-item py-2 md:hover:text-enipp-purple1 cursor-pointer flex items-center gap-2"
           >
             <span>Sign Out</span>
           </div>
         ) : (
           <div
             onClick={() => navigate("/login")}
-            className="nav-item py-2 hover:text-enipp-purple1 cursor-pointer"
+            className="nav-item py-2 md:hover:text-enipp-purple1 cursor-pointer"
           >
             Sign In
           </div>
@@ -145,7 +145,7 @@ const Navbar = () => {
         {/* {theme === "dark" ? (
           <div
             onClick={() => setTheme("light")}
-            className="nav-item p-3 hover:text-enipp-purple1 text-enipp-purple1 rounded-full bg-[#141B22] cursor-pointer"
+            className="nav-item p-3 md:hover:text-enipp-purple1 text-enipp-purple1 rounded-full bg-[#141B22] cursor-pointer"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -194,7 +194,7 @@ const Navbar = () => {
             {/* {theme === "dark" ? (
               <div
                 onClick={() => setTheme("light")}
-                className="nav-item p-3 hover:text-enipp-purple1 text-enipp-purple1 rounded-full bg-[#141B22] cursor-pointer"
+                className="nav-item p-3 md:hover:text-enipp-purple1 text-enipp-purple1 rounded-full bg-[#141B22] cursor-pointer"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -267,11 +267,6 @@ const Navbar = () => {
             navBottom ? "h-[244px] pb-3" : "h-0 p-0"
           }`}
         >
-          {userLoggedIn && (
-            <div className="nav-item py-2 text-enipp-purple1 font-medium border-b border-zinc-800 mb-2 pb-3">
-              {user?.displayName}
-            </div>
-          )}
           {navMenu.map((item, index) => (
             <div
               onClick={() =>{ 
