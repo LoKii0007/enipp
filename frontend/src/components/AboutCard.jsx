@@ -1,8 +1,8 @@
 import React from "react";
 import { Canvas } from "@react-three/fiber";
 import { Environment, OrbitControls } from "@react-three/drei";
-import { Model2 } from "../models/Model2";
-import { DiscoModel } from "../models/Disco";
+import { Model2 } from "@/models/Model2";
+import { DiscoModel } from "@/models/Disco";
 import { HeartModel } from "@/models/HeartModel";
 import { FlowerModel } from "@/models/Flower";
 

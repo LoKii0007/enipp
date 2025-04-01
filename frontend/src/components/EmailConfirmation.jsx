@@ -59,7 +59,6 @@ export default function EmailConfirmation() {
         setVerified(true);
         setVerifying(false);
         setShowFooter(true);
-        toast.success("Email verified successfully!");
         
         // Automatically redirect to home after a delay
         setTimeout(() => {

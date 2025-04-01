@@ -83,7 +83,7 @@ const AboutComponent = () => {
               >
                 {thumnails.map((item, index) => (
                   <SplideSlide key={index} className="">
-                    <AboutCard theme={theme} item={item} />
+                    <AboutCard theme={theme} item={item} index={index} />
                   </SplideSlide>
                 ))}
               </SplideTrack>
