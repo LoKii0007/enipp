@@ -46,7 +46,7 @@ export const team = [
     img: "/images/team/kabir.png",
     title: "Marketing & Sales",
     social: {
-      linkedin: "https://www.linkedin.com/in/kabir-singh-b70000200/",
+      linkedin: "https://www.linkedin.com/in/kabir-singh-125671183/",
       instagram: "https://www.instagram.com/kabir_singh_007/",
     },
   },
@@ -55,8 +55,17 @@ export const team = [
     img: "/images/team/hardik.png",
     title: "Creative Head",
     social: {
-      linkedin: "https://www.linkedin.com/in/hardikgupta007/",
+      linkedin: "https://www.linkedin.com/in/hardik-gupta-a87308274/",
       instagram: "https://www.instagram.com/hardikgupta007/",
+    },
+  },
+  {
+    name: "Kanak Saini",
+    img: "/images/team/kanak.png",
+    title: "Texture Artist",
+    social: {
+      linkedin: "https://www.linkedin.com/in/kanak-saini-699ab62b4/",
+      instagram: "https://www.instagram.com/kanak_saini_007/",
     },
   },
   {
@@ -73,17 +82,8 @@ export const team = [
     img: "/images/team/sudhir.png",
     title: "XR Developer",
     social: {
-      linkedin: "https://www.linkedin.com/in/sudhir-kumar-b70000200/",
+      linkedin: "https://www.linkedin.com/in/sudhir-kumar-9b574322a/",
       instagram: "https://www.instagram.com/sudhir_kumar_007/",
-    },
-  },
-  {
-    name: "Kanak Saini",
-    img: "/images/team/kanak.png",
-    title: "Texture Artist",
-    social: {
-      linkedin: "https://www.linkedin.com/in/kanak-saini-b70000200/",
-      instagram: "https://www.instagram.com/kanak_saini_007/",
     },
   },
 ];
