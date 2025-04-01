@@ -75,7 +75,7 @@ const Navbar = () => {
               Are you sure you want to sign out from your account?
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter className="flex flex-row justify-end gap-2 pt-4">
+          <DialogFooter className="flex flex-row justify-center md:justify-end gap-2 pt-4">
             <Button
               variant="outline"
               onClick={() => setShowSignOutDialog(false)}
@@ -83,15 +83,15 @@ const Navbar = () => {
                 theme === "dark"
                   ? "bg-transparent border-zinc-700 text-white md:hover:bg-zinc-800 md:hover:text-white"
                   : "bg-transparent border-zinc-300 text-black md:hover:bg-zinc-100 md:hover:text-black"
-              } tf-button relative rounded-none`}
+              } tf-button w-[80px] sm:w-[100px] relative rounded-md shadow-md`}
             >
               <div className="z-20">Cancel</div>
             </Button>
             <Button
               onClick={handleSignOut}
-              className={`w-[100px] bg-gradient-to-r from-enipp-purple1 to-enipp-purple2 border md:hover:opacity-90 tf-button relative
+              className={`w-[80px] sm:w-[100px] bg-gradient-to-r from-enipp-purple1 to-enipp-purple2 border md:hover:opacity-90 tf-button relative
                 ${theme === "dark" ? "after:!bg-zinc-800 text-white border-white" : "after:!bg-[#ffffff] text-black border-black"}
-                rounded-none`}
+                rounded-md shadow-md`}
               disabled={isSigningOut}
             >
               {isSigningOut ? (
@@ -282,14 +282,14 @@ const Navbar = () => {
           {userLoggedIn ? (
             <div
               onClick={openSignOutDialog}
-              className="nav-item py-2 cursor-pointer text-enipp-purple1"
+              className="nav-item py-2 cursor-pointer md:hover:text-enipp-purple1 "
             >
               Sign Out
             </div>
           ) : (
             <div
               onClick={() => navigate("/login")}
-              className="nav-item py-2 cursor-pointer text-enipp-purple1"
+              className="nav-item py-2 cursor-pointer md:hover:text-enipp-purple1"
             >
               Sign In
             </div>

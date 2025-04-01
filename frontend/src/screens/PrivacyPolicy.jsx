@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { policies } from '@/utils/constants'
 
 const PrivacyPolicy = () => {
+  useEffect(()=>{
+    window.scrollTo({behavior:'smooth', top:0})
+  }, [])
   return (
     <>
       <div className="privacy w-full bg-enipp-dark1 text-white flex justify-center items-center p-4 md:p-12">

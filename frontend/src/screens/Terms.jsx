@@ -1,13 +1,18 @@
-import React from 'react'
-import { policies } from '@/utils/constants'
+import React, { useEffect } from "react";
+import { policies } from "@/utils/constants";
 
 const Terms = () => {
+  useEffect(() => {
+    window.scrollTo({ behavior: "smooth", top: 0 });
+  }, []);
   return (
     <>
       <div className="privacy w-full bg-enipp-dark1 text-white flex justify-center items-center p-4 md:p-12">
         <div className="max-w-4xl w-full mx-auto px-4 py-8 rounded-lg shadow-lg">
-          <h1 className="text-2xl md:text-3xl font-bold text-center mb-8 text-white">Our Policies</h1>
-          
+          <h1 className="text-2xl md:text-3xl font-bold text-center mb-8 text-white">
+            Our Policies
+          </h1>
+
           {/* All Policies Listed Vertically */}
           <div className="space-y-12">
             {policies.slice(1).map((policy, index) => (
@@ -27,7 +32,7 @@ const Terms = () => {
                     </p>
                   )}
                 </div>
-                
+
                 {/* Policy Sections */}
                 <div className="space-y-6">
                   {policy.sections.map((section, idx) => (
@@ -35,7 +40,7 @@ const Terms = () => {
                       <h3 className="text-lg font-semibold text-white mb-2">
                         {section.heading}
                       </h3>
-                      {typeof section.content === 'string' ? (
+                      {typeof section.content === "string" ? (
                         <p className="text-gray-300">{section.content}</p>
                       ) : (
                         <ul className="list-disc pl-5 space-y-1 text-gray-300">
@@ -53,7 +58,7 @@ const Terms = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Terms
+export default Terms;
