@@ -52,7 +52,8 @@ const Footer = () => {
               Address: {companyInfo.address}
             </p>
             <p className="text-left md:text-xl">
-              Email: {companyInfo.email} <br /> Phone: {companyInfo.phone}
+              Email: {companyInfo.email} <br /> 
+              {/* Phone: {companyInfo.phone} */}
             </p>
           </div>
           <div className="grid grid-cols-2 items-center h-full">

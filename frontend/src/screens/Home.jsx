@@ -6,13 +6,13 @@ import AboutComponent from "@/components/AboutComponent";
 import RoadmapComponent from "@/components/RoadmapComponent";
 import NFTCard from "@/components/ItemDrop";
 import ServiceCard from "@/components/ServiceCard";
-import { services, faq } from "@/utils/constants";
+import { services, faq, pathnames } from "@/utils/constants";
 import Model from "@/components/Model";
 import { Link } from "react-router-dom";
 
 const Home = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
 
   function responsive() {
     if (window.innerWidth < 768) {
@@ -52,7 +52,8 @@ const Home = () => {
                 Create, Customize & Share Your 3D Experiences with Ease!
               </div>
               <div className="mt-10 grid grid-cols-2 gap-8 w-full max-w-xl md:text-xl">
-                <button
+                <Link
+                  to={pathnames.contact}
                   className={`flex rounded-md shadow-md after:rounded-md w-full justify-center items-center bg-gradient-to-r from-enipp-purple1 to-enipp-purple2 border border-enipp-purple1 text-[#141B22] py-3 tf-button 
                ${
                  theme === "dark"
@@ -62,7 +63,7 @@ const Home = () => {
                `}
                 >
                   <div className="z-20">Get Started</div>
-                </button>
+                </Link>
                 <Link
                   to="https://calendly.com/kabirsinghpahwa/get-in-touch"
                   target="_blank"
@@ -82,7 +83,6 @@ const Home = () => {
 
           {/* mobile */}
           <div className="hero z-30 w-full h-[calc(100dvh-64px)] sm:hidden flex flex-col items-center relative justify-between px-5 py-8 overflow-y-hidden">
-
             <div className="uppercase break-words text-center overflow-hidden w-full tracking-[0px] text-[40px] font-bold leading-[100%]">
               with <span className="text-enipp-purple1">ENIPP</span> <br />
               express beyond <br /> reality
@@ -101,7 +101,8 @@ const Home = () => {
               </div>
 
               <div className="mt-10 grid grid-cols-2 gap-5 w-full">
-                <button
+                <Link
+                  to={pathnames.contact}
                   className={`flex rounded-md shadow-md after:rounded-md w-full justify-center items-center bg-gradient-to-r from-enipp-purple1 to-enipp-purple2 border border-enipp-purple1 text-[#141B22] py-3 tf-button 
                ${
                  theme === "dark"
@@ -111,7 +112,7 @@ const Home = () => {
                `}
                 >
                   <div className="z-20">Get Started</div>
-                </button>
+                </Link>
                 <Link
                   to="https://calendly.com/kabirsinghpahwa/get-in-touch"
                   target="_blank"

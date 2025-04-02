@@ -157,7 +157,7 @@ export const faq = [
 
 export const companyInfo = {
   name: "Enipp",
-  address: "D-52 kalkaji, New Delhi, 110019",
+  address: "kalkaji, New Delhi, 110019",
   phone: "+91 9971175159",
   email: "admin@enipp.com",
   website: "https://www.enipp.com",

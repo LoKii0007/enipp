@@ -63,7 +63,7 @@ const ContactForm = () => {
           : "bg-[#ffffff] text-black"
       }  p-5 md:p-10 flex flex-col items-center `}
     >
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
         <div className="border border-gray-700 p-6 text-center flex flex-col gap-5">
           <span className="text-enipp-purple1 flex justify-center items-center text-3xl">
             <svg
@@ -96,7 +96,7 @@ const ContactForm = () => {
           <h2 className="font-bold text-xl mt-2">Email</h2>
           <p className="font-sans">{companyInfo.email}</p>
         </div>
-        <div className="border border-gray-700 p-6 text-center flex flex-col gap-5">
+        {/* <div className="border border-gray-700 p-6 text-center flex flex-col gap-5">
           <span className="text-enipp-purple1 flex justify-center items-center text-3xl">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -114,7 +114,7 @@ const ContactForm = () => {
           </span>
           <h2 className="font-bold text-xl mt-2">Phone</h2>
           <p className="font-sans">{companyInfo.phone}</p>
-        </div>
+        </div> */}
       </div>
 
       <h2 className="text-2xl font-bold my-10">Get In Touch</h2>
