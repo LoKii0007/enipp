@@ -66,3 +66,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+.redirect-message {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #d1d5db; /* Matches text-gray-400 */
+}
