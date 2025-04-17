@@ -23,6 +23,7 @@ import PrivacyPolicy from "./screens/PrivacyPolicy";
 import Terms from "./screens/Terms";
 import InitialLoader from "./components/InitialLoader";
 import { pathnames } from "./utils/constants";
+import ReactGA from "react-ga4";
 
 const MODELS = [
   '/models/flower-transformed.glb',
@@ -34,6 +35,10 @@ const MODELS = [
   '/models/model1-transformed.glb',
   '/models/model1.gltf'
 ];
+
+// Initialize Google Analytics 4
+const TRACKING_ID = "G-LZKEMX0LMM"; // Replace with your GA4 Measurement ID
+ReactGA.initialize(TRACKING_ID);
 
 // Loading component to show while auth state is initializing
 function LoadingScreen() {
@@ -67,14 +72,14 @@ function ProtectedRoute({ children }) {
     // Skip redirect logic for bypass routes
     if (bypassRoutes.includes(location.pathname)) {
       setIsRedirecting(false);
-      setAssetsLoaded(true); // Allow page to render
+      setAssetsLoaded(true);
       return;
     }
 
     // Skip if auth is loading or user is logged in
     if (isLoading || userLoggedIn) {
       setIsRedirecting(false);
-      setAssetsLoaded(true); // Allow page to render
+      setAssetsLoaded(true);
       return;
     }
 
@@ -85,11 +90,17 @@ function ProtectedRoute({ children }) {
     if (!userLoggedIn && assetsLoaded) {
       const timer = setTimeout(() => {
         setIsRedirecting(true);
+        // Track redirect event
+        ReactGA.event({
+          category: "Navigation",
+          action: "Redirect to Login",
+          label: location.pathname,
+        });
         // Show redirect message for 1 second before actual redirect
         setTimeout(() => {
           navigate(pathnames.login);
         }, 1000);
-      }, 3500); // Random delay between 3-4 seconds (3500ms)
+      }, 3500);
 
       // Cleanup timer on unmount
       return () => clearTimeout(timer);
@@ -111,6 +122,15 @@ function AppContent() {
   const { isLoading } = AuthHook();
   const [isInitialLoading, setIsInitialLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
+
+  // Track page views on route change
+  useEffect(() => {
+    ReactGA.send({
+      hitType: "pageview",
+      page: location.pathname + location.search,
+      title: document.title || location.pathname,
+    });
+  }, [location]);
 
   useEffect(() => {
     // Hide Navbar on EmailConfirmation and ResetPassword pages
@@ -143,7 +163,6 @@ function AppContent() {
 
       try {
         await Promise.all(preloadPromises);
-        // Add a small delay to ensure smooth transition
         await new Promise((resolve) => setTimeout(resolve, 500));
         setIsInitialLoading(false);
       } catch (error) {
