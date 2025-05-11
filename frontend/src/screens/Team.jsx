@@ -25,9 +25,9 @@ const Team = () => {
   
   return (
     <>
-      <div className="contact-us w-full">
+      <div className={`contact-us ${theme === 'dark' ? 'bg-enipp-dark1' : 'bg-[#EEEEEE]'} w-full min-h-[calc(100vh-408.89px)]`}>
         {/* <PageHeading heading="Our Team" /> */}
-        <div className={`flex justify-center items-center w-full pb-12 ${theme === 'dark' ? 'bg-enipp-dark1' : 'bg-[#EEEEEE]'}`}> 
+        <div className={`flex items-start w-full pb-12 ${theme === 'dark' ? 'bg-enipp-dark1' : 'bg-[#EEEEEE]'}`}> 
           <TeamComponent isMobile={isMobile} />
         </div>
       </div>

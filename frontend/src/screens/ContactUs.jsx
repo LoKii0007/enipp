@@ -12,7 +12,9 @@ const ContactUs = () => {
 
   return (
     <>
-      <div className="contact-us min-h-screen w-full">
+      <div className={`contact-us min-h-[calc(100vh-408.89px)] w-full ${
+            theme === "dark" ? "bg-enipp-dark1" : "bg-[#EEEEEE]"
+          }`}>
         <PageHeading heading="Contact Us" />
         <div
           className={`flex justify-center items-center w-full py-12 ${

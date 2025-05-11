@@ -8,7 +8,7 @@ const Roadmap = () => {
   const { theme } = useTheme();
   return (
     <>
-      <div className=" min-h-screen w-full">
+      <div className={`min-h-[calc(100vh-408.89px)] w-full ${theme === 'dark' ? 'bg-enipp-dark1' : 'bg-[#EEEEEE]'}`}>
           {/* <PageHeading heading="Roadmap" /> */}
           <div className={`flex justify-center items-center w-full py-12 ${theme === 'dark' ? 'bg-enipp-dark1' : 'bg-[#EEEEEE]'}`}>
             <RoadmapComponent />
